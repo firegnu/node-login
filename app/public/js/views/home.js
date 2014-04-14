@@ -3,7 +3,11 @@ $(document).ready(function(){
 
 	var hc = new HomeController();
 	var av = new AccountValidator();
-	
+	//
+    $('#giscontent').css({'height': window.innerHeight - 80});
+    $('#giscontent').css({'background-color': 'red'});
+    $('#giscontent').css({'margin-top': '40px'});
+    //
 	$('#account-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
 			if (av.validateForm() == false){
