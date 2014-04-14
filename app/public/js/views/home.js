@@ -27,15 +27,10 @@ $(document).ready(function(){
 	});
 	$('#name-tf').focus();
 	$('#github-banner').css('top', '41px');
-
 // customize the account settings form //
-	
-	$('#account-form h1').text('Account Settings');
-	$('#account-form #sub1').text('Here are the current settings for your account.');
-	$('#user-tf').attr('disabled', 'disabled');
-	$('#account-form-btn1').html('Delete');
-	$('#account-form-btn1').addClass('btn-danger');
-	$('#account-form-btn2').html('Update');
+
+//modalmyprofile
+    $('#modalmyprofile').modal({ show : false, keyboard : true, backdrop : true });
 
 // setup the confirm window that displays when the user chooses to delete their account //
 

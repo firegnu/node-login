@@ -3,9 +3,8 @@ var crypto 		= require('crypto')
 var moment 		= require('moment');
 var Schema = require('jugglingdb').Schema;
 var schema = new Schema('mysql', {
-        database: 'giswebcms',
-        username: 'root',
-        password: '000128'
+        database: 'accounts',
+        username: 'root'
 });
 
 var accounts = schema.define('accounts', {
