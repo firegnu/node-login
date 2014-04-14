@@ -7,11 +7,23 @@ function HomeController()
 
 // handle user logout //
 	$('#btn-logout').click(function(){ that.attemptLogout(); });
-
+// handle user profile
+    $('#myprofile').click(function() {
+        //modalmyprofile
+        $('#account-form h1').text('Account Settings');
+        $('#account-form #sub1').text('Here are the current settings for your account.');
+        $('#user-tf').attr('disabled', 'disabled');
+        $('#account-form-btn1').html('Delete');
+        $('#account-form-btn1').addClass('btn-danger');
+        $('#account-form-btn2').html('Update');
+        $('#modalmyprofile').modal('show');
+        $('#modalmyprofile').css({'background-color': 'transparent'});
+    });
 // confirm account deletion //
 	$('#account-form-btn1').click(function(){$('.modal-confirm').modal('show')});
 
 // handle account deletion //
+    //$('.modal-confirm .submit').hide();
 	$('.modal-confirm .submit').click(function(){ that.deleteAccount(); });
 
 	this.deleteAccount = function()
@@ -21,7 +33,7 @@ function HomeController()
 		$.ajax({
 			url: '/delete',
 			type: 'POST',
-			data: { id: $('#userId').val()},
+			data: { id: $('#user-tf').val()},
 			success: function(data){
 	 			that.showLockedAlert('Your account has been deleted.<br>Redirecting you back to the homepage.');
 			},
@@ -64,4 +76,5 @@ HomeController.prototype.onUpdateSuccess = function()
 	$('.modal-alert .modal-body p').html('Your account has been updated.');
 	$('.modal-alert').modal('show');
 	$('.modal-alert button').off('click');
+    $('#modalmyprofile').modal('hide');
 }

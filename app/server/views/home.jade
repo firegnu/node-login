@@ -6,12 +6,22 @@ block content
 		div.navbar-inner
 			div.container-fluid
 				ul#global-nav.nav.pull-left
-					a(href='#').brand Control Panel
+					a(href='#').brand WebCMS
+				div.nav-collapse
+					ul.nav
+						li.active
+							a(href='home') Home
+						li
+							a(href='search') Search
+						li
+							a(href='ownhistory') History
+						li#myprofile
+							a() Profile
 				button#btn-logout.btn.btn-primary
 					i.icon-lock.icon-white
 					| Sign Out
 
-	include account
+	include modals/profile-account
 	include modals/alert
 	include modals/confirm
 
