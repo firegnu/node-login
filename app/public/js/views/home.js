@@ -5,6 +5,7 @@ $(document).ready(function(){
 	var av = new AccountValidator();
 	//
     $('#giscontent').css({'height': window.innerHeight - 80});
+    $('#giscontent').css({'width': '300px'});
     //
 	$('#account-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
@@ -41,5 +42,20 @@ $(document).ready(function(){
 	$('.modal-confirm .cancel').html('Cancel');
 	$('.modal-confirm .submit').html('Delete');
 	$('.modal-confirm .submit').addClass('btn-danger');
-
+//setup tree
+    //$('#giscontent').jstree();
+    $('#giscontent').jstree({'plugins':["wholerow","checkbox"], 'core' : {
+        'data' : [
+            {
+                "text" : "Same but with checkboxes",
+                "children" : [
+                    { "text" : "initially selected", "state" : { "selected" : true } },
+                    { "text" : "custom icon URL", "icon" : "http://jstree.com/tree-icon.png" },
+                    { "text" : "initially open", "state" : { "opened" : true }, "children" : [ "Another node" ] },
+                    { "text" : "custom icon class", "icon" : "glyphicon glyphicon-leaf" }
+                ]
+            },
+            "And wholerow selection"
+        ]
+    }});
 })
