@@ -18,6 +18,8 @@ function HomeController()
         $('#account-form-btn2').html('Update');
         $('#modalmyprofile').modal('show');
         $('#modalmyprofile').css({'background-color': 'transparent'});
+        $('#modalmyprofile').css({'border': 'none'});
+        $('#modalmyprofile').css({'box-shadow': 'none'});
     });
 // confirm account deletion //
 	$('#account-form-btn1').click(function(){$('.modal-confirm').modal('show')});

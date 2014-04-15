@@ -79,7 +79,7 @@ exports.addNewAccount = function(newData, callback)
 
 exports.updateAccount = function(newData, callback)
 {
-	accounts.findOne({user:newData.user}, function(e, o){
+	accounts.findOne({where:{user:newData.user}}, function(e, o){
 		o.name 		= newData.name;
 		o.email 	= newData.email;
 		o.country 	= newData.country;
@@ -112,7 +112,9 @@ exports.updatePassword = function(email, newPass, callback)
 
 exports.deleteAccount = function(id, callback)
 {
-	accounts.destroyAll({where:{ id: id }}, callback);
+    accounts.findOne({where:{user:id}}, function(e, o){
+        o.destroy(callback);
+    });
 }
 
 exports.getAccountByEmail = function(email, callback)
