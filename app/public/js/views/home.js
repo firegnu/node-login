@@ -4,7 +4,7 @@ $(document).ready(function(){
 	var hc = new HomeController();
 	var av = new AccountValidator();
 	//
-    $('#giscontent').css({'height': window.innerHeight - 80});
+    $('#giscontent').css({'height': window.innerHeight - 280});
     $('#giscontent').css({'width': '300px'});
     //
 	$('#account-form').ajaxForm({
@@ -44,7 +44,7 @@ $(document).ready(function(){
 	$('.modal-confirm .submit').addClass('btn-danger');
 //setup tree
     //$('#giscontent').jstree();
-    $('#giscontent').jstree({'plugins':["wholerow","checkbox"], 'core' : {
+    $('#giscontent').jstree({'plugins':["checkbox", "contextmenu", "dnd", "search", "sort", "state", "types", "unique", "wholerow"], 'core' : {
         'data' : [
             {
                 "text" : "Same but with checkboxes",
@@ -58,4 +58,12 @@ $(document).ready(function(){
             "And wholerow selection"
         ]
     }});
+    var to = false;
+    $('#treesearch').keyup(function () {
+        if(to) { clearTimeout(to); }
+        to = setTimeout(function () {
+            var v = $('#treesearch').val();
+            $('#giscontent').jstree(true).search(v);
+        }, 250);
+    });
 })
