@@ -1,9 +1,10 @@
-
-.modal-alert.modal.hide.fade
-    div.modal-header
-        button.close(data-dismiss='modal') x
-        h3
-    div.modal-body
-        p
-    div.modal-footer
-        button(data-dismiss="modal")#ok.btn.btn-warning OK
+.modal-alert.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+	.modal-dialog
+		.modal-content
+			.modal-header
+				button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+				h4
+			.modal-body
+				p
+			.modal-footer
+				button.btn.btn-primary(type='button', data-dismiss='modal')#ok OK

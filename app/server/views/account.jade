@@ -13,15 +13,17 @@ input(type='hidden', value= user._id)#userId
 			#name-cg.control-group
 				label.control-label(for='name-tf') Name
 				.controls
-					input#name-tf.input-xlarge(type='text', name='name', value= user.name)
+					//input#name-tf.input-xlarge(type='text', name='name', value= user.name)
+					input#name-tf.input-xlarge.form-control(type='text', name='name', value = user.name, placeholder='UserName', required='')
 			#email-cg.control-group
 				label.control-label(for='email-tf') Email
 				.controls
-					input#email-tf.input-xlarge(type='text', name='email', value= user.email)
+					//input#email-tf.input-xlarge(type='text', name='email', value= user.email)
+					input#email-tf.input-xlarge.form-control(type='text', name='email', value = user.email, placeholder='Email', required='')
 			#clist-cg.control-group
 				label.control-label(for='country-list') Location
 				.controls
-					select#country-list(name='country')
+					select#country-list.selectpicker.bla.bla.bli(name='country', data-live-search='true')
 						each item in countries
 							option(selected=item.name == user.country)= item.name
 			hr
@@ -29,15 +31,17 @@ input(type='hidden', value= user._id)#userId
 			#user-cg.control-group
 				label.control-label(for='user-tf') Username
 				.controls
-					input#user-tf.input-xlarge.disabled(type='text', name='user', value= user.user)
+					//input#user-tf.input-xlarge.disabled(type='text', name='user', value= user.user)
+					input#user-tf.input-xlarge.disabled.form-control(type='text', name='user', value= user.user)
 			#pass-cg.control-group
 				label.control-label(for='pass-tf') Password
 				.controls
-					input#pass-tf.input-xlarge(type='password', name='pass', value='')
+					//input#pass-tf.input-xlarge(type='password', name='pass', value='')
+					input#pass-tf.input-xlarge.form-control(type='password', name='pass', value='')
 			.form-actions
 				button(type='button')#account-form-btn1.btn
 				button(type='submit')#account-form-btn2.btn
 
 // display form errors in a custom modal window //
-
+//input#user-tf.form-control(type='text', name='user', placeholder='UserName', required='')
 include modals/form-errors

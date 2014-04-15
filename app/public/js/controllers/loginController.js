@@ -4,7 +4,7 @@ function LoginController()
 
 // bind event listeners to button clicks //
 	
-	$('#login-form #forgot-password').click(function(){ $('#get-credentials').modal('show');});
+	//$('#login-form #forgot-password').click(function(){ $('#get-credentials').modal('show');});
 	
 // automatically toggle focus between the email modal window and the login form //
 

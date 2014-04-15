@@ -20,7 +20,9 @@ $(document).ready(function(){
 		}
 	});
 	$('#name-tf').focus();
-	
+    $('.selectpicker').selectpicker({
+        'selectedText': 'cat'
+    });
 // customize the account signup form //
 	
 	$('#account-form h1').text('Signup');

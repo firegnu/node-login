@@ -5,8 +5,6 @@ $(document).ready(function(){
 	var av = new AccountValidator();
 	//
     $('#giscontent').css({'height': window.innerHeight - 80});
-    $('#giscontent').css({'background-color': 'red'});
-    $('#giscontent').css({'margin-top': '40px'});
     //
 	$('#account-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
@@ -32,7 +30,6 @@ $(document).ready(function(){
 	$('#name-tf').focus();
 	$('#github-banner').css('top', '41px');
 // customize the account settings form //
-
 //modalmyprofile
     $('#modalmyprofile').modal({ show : false, keyboard : true, backdrop : true });
 

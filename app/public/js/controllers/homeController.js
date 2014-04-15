@@ -20,6 +20,9 @@ function HomeController()
         $('#modalmyprofile').css({'background-color': 'transparent'});
         $('#modalmyprofile').css({'border': 'none'});
         $('#modalmyprofile').css({'box-shadow': 'none'});
+        $('#account-form .selectpicker').selectpicker({
+            'selectedText': 'cat'
+        });
     });
 // confirm account deletion //
 	$('#account-form-btn1').click(function(){$('.modal-confirm').modal('show')});

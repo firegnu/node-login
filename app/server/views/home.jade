@@ -2,24 +2,26 @@
 extends layout
 
 block content
-	div.navbar.navbar-fixed-top
-		div.navbar-inner
-			div.container-fluid
-				ul#global-nav.nav.pull-left
-					a(href='#').brand WebCMS
-				div.nav-collapse
-					ul.nav
-						li.active
-							a(href='home') Home
-						li
-							a(href='search') Search
-						li
-							a(href='ownhistory') History
-						li#myprofile
-							a() Profile
-				button#btn-logout.btn.btn-primary
-					i.icon-lock.icon-white
-					| Sign Out
+	div.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+		div.container
+			div.navbar-header
+				button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+					span.sr-only Toggle navigation
+					span.icon-bar
+					span.icon-bar
+					span.icon-bar
+				a.navbar-brand(href='#') Project name
+			div.collapse.navbar-collapse
+				ul.nav.navbar-nav
+					li.active
+						a(href='#') Home
+					li
+						a(href='#about') About
+					li#myprofile
+						a() MyProfile
+			button#btn-logout.btn.btn-primary
+				i.icon-lock.icon-white
+				| Sign Out
 	div#giscontent
 	include modals/profile-account
 	include modals/alert
@@ -28,8 +30,8 @@ block content
 block scripts
 	script(src='/vendor/jquery.min.js')
 	script(src='/vendor/jquery.form.js')
-	script(src='/vendor/bootstrap-modal.js')
-	script(src='/vendor/bootstrap-transition.js')
+	script(src='/vendor/bootstrap.min.js')
+	script(src='/vendor/bootstrap-select.min.js')
 	script(src='/js/views/home.js')
 	script(src='/js/controllers/homeController.js')
 	script(src='/js/form-validators/accountValidator.js')
