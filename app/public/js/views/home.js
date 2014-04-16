@@ -4,9 +4,11 @@ $(document).ready(function(){
 	var hc = new HomeController();
 	var av = new AccountValidator();
 	//
-    $('#giscontent').css({'height': window.innerHeight - 280});
+    $('#giscontent').css({'height': (window.innerHeight - 52)*0.9});
     $('#giscontent').css({'width': '300px'});
     //
+    $('#mapcanvas').css({'height': (window.innerHeight - 52)*0.9 + 44});
+    $('#mapcanvas').css({'width': (window.innerWidth - 310)});
 	$('#account-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
 			if (av.validateForm() == false){
@@ -42,21 +44,75 @@ $(document).ready(function(){
 	$('.modal-confirm .cancel').html('Cancel');
 	$('.modal-confirm .submit').html('Delete');
 	$('.modal-confirm .submit').addClass('btn-danger');
-//setup tree
-    //$('#giscontent').jstree();
-    $('#giscontent').jstree({'plugins':["checkbox", "contextmenu", "dnd", "search", "sort", "state", "types", "unique", "wholerow"], 'core' : {
-        'data' : [
-            {
-                "text" : "Same but with checkboxes",
+
+    var treeData = [
+        {
+            "text" : "矢量数据",
+            "children" : [
+                { "text" : "数据格式", "state" : { "selected" : false }, "children" : []}
+            ]
+        },
+        {
+            "text" : "影像数据",
+            "children" : [
+                { "text" : "数据格式", "state" : { "selected" : false }, "children" : []}
+            ]
+        },
+        {
+            "text" : "DEM数据",
+            "children" : [
+                { "text" : "数据格式", "state" : { "selected" : false }, "children" : []}
+            ]
+        },
+        {
+            "text" : "扫描数据",
+            "children" : [
+                { "text" : "数据格式", "state" : { "selected" : false }, "children" : []}
+            ]
+        },
+        {
+            "text" : "其他数据",
+            "children" : [
+                { "text" : "数据格式", "state" : { "selected" : false }, "children" : []}
+            ]
+        }
+    ];
+//selizase the dbjson data
+    var vectorDBObject = eval(SQLDB_VECTOR);
+    var scanningDBObject = eval(SQLDB_SCANIMG);
+    var imageDBObject = eval(SQLDB_IMAGE);
+    var demDBObject = eval(SQLDB_DEM);
+    var qitaDBObject = eval(SQLDB_DATUM);
+
+    var analyzingDBJSONData = function(dbObect, treeIndex) {
+        var formatArray = [];
+        for(var i = 0; i < dbObect.data.length; i++) {
+            var dbData = dbObect.data[i];
+            if(formatArray.indexOf(dbData.数据格式) !== -1) {
+                treeData[treeIndex].children[0].children[formatArray.indexOf(dbData.数据格式)].children.push(dbData.数据名称);
+                continue;
+            }
+            formatArray.push(dbData.数据格式);
+            var newFormat = {"text" : dbData.数据格式,
                 "children" : [
-                    { "text" : "initially selected", "state" : { "selected" : true } },
-                    { "text" : "custom icon URL", "icon" : "http://jstree.com/tree-icon.png" },
-                    { "text" : "initially open", "state" : { "opened" : true }, "children" : [ "Another node" ] },
-                    { "text" : "custom icon class", "icon" : "glyphicon glyphicon-leaf" }
-                ]
-            },
-            "And wholerow selection"
-        ]
+                ]};
+            treeData[treeIndex].children[0].children.push(newFormat);
+            treeData[treeIndex].children[0].children[formatArray.indexOf(dbData.数据格式)].children.push(dbData.数据名称);
+        }
+    };
+//vecot data
+    analyzingDBJSONData(vectorDBObject, 0);
+//image data
+    analyzingDBJSONData(imageDBObject, 1);
+//dem data
+    analyzingDBJSONData(demDBObject, 2);
+//scanning data
+    analyzingDBJSONData(scanningDBObject, 3);
+//other data
+    analyzingDBJSONData(qitaDBObject, 4);
+//setup tree
+    $('#giscontent').jstree({'plugins':["search", "state", "wholerow"], 'core' : {
+        'data' : treeData
     }});
     var to = false;
     $('#treesearch').keyup(function () {

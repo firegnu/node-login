@@ -2,19 +2,14 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: #f2f9fe;
-  background: -moz-radial-gradient(center, ellipse cover, #f2f9fe 0%, #d6f0fd 100%);
-/* FF3.6+ */
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #f2f9fe), color-stop(100%, #d6f0fd));
-/* Chrome,Safari4+ */
-  background: -webkit-radial-gradient(center, ellipse cover, #f2f9fe 0%, #d6f0fd 100%);
-/* Chrome10+,Safari5.1+ */
-  background: -o-radial-gradient(center, ellipse cover, #f2f9fe 0%, #d6f0fd 100%);
-/* Opera 12+ */
-  background: -ms-radial-gradient(center, ellipse cover, #f2f9fe 0%, #d6f0fd 100%);
-/* IE10+ */
-  background: radial-gradient(center, ellipse cover, #f2f9fe 0%, #d6f0fd 100%);
-/* W3C */
+/*background rgb(242,249,254)
+	background -moz-radial-gradient(center, ellipse cover,  rgba(242,249,254,1) 0%, rgba(214,240,253,1) 100%) /* FF3.6+ */
+/*background -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(242,249,254,1)), color-stop(100%,rgba(214,240,253,1))) /* Chrome,Safari4+ */
+/*background -webkit-radial-gradient(center, ellipse cover,  rgba(242,249,254,1) 0%,rgba(214,240,253,1) 100%) /* Chrome10+,Safari5.1+ */
+/*background -o-radial-gradient(center, ellipse cover,  rgba(242,249,254,1) 0%,rgba(214,240,253,1) 100%) /* Opera 12+ */
+/*background -ms-radial-gradient(center, ellipse cover,  rgba(242,249,254,1) 0%,rgba(214,240,253,1) 100%) /* IE10+ */
+/*background radial-gradient(center, ellipse cover,  rgba(242,249,254,1) 0%,rgba(214,240,253,1) 100%) /* W3C */
+  background: url("../img/globe_east_2048.jpg") no-repeat center -50px;
 }
 #login-container {
   width: 340px;
@@ -88,7 +83,7 @@ body {
 #btn-logout {
   width: 100px;
   top: 10px;
-  right: 8px;
+  right: 60px;
   position: absolute;
 }
 #print {
@@ -124,9 +119,46 @@ button i {
   padding-left: 8px;
 }
 #giscontent {
-  background-color: #9c8181;
-  margin-top: 52px;
+  background-color: rgba(128,128,128,0.9);
+  margin-top: 58px;
+  border: 1px solid #fff;
+  color: #fff;
+  border-radius: 4px;
+  overflow-x: scroll;
+  overflow-y: scroll;
 }
 #treesearch {
   width: 300px;
+  margin-top: 10px;
+  background-color: rgba(128,128,128,0.9);
+  color: #fff;
+  border: 1px solid #fff;
+}
+#treediv {
+  width: 300px;
+  float: left;
+}
+#mapcanvas {
+  float: right;
+  margin-top: 58px;
+  border: 1px solid #fff;
+  background-color: rgba(128,128,128,0.9);
+  border-radius: 4px;
+}
+.navbar-inverse {
+  background-color: #000;
+  border-bottom-color: #808080;
+}
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+/* Set the fixed height of the footer here */
+  height: 40px;
+  background-color: #000;
+  border-top: 1px solid;
+  border-top-color: #808080;
+}
+.text-muted {
+  color: #fff;
 }
