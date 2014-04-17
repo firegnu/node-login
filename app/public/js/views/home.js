@@ -78,13 +78,6 @@ $(document).ready(function(){
             ]
         }
     ];
-//selizase the dbjson data
-    var vectorDBObject = eval(SQLDB_VECTOR);
-    var scanningDBObject = eval(SQLDB_SCANIMG);
-    var imageDBObject = eval(SQLDB_IMAGE);
-    var demDBObject = eval(SQLDB_DEM);
-    //var qitaDBObject = eval(SQLDB_DATUM);
-
     var analyzingDBJSONData = function(dbObject, treeIndex) {
         //var dbObject = JSON.parse(dbObect);
         var formatArray = [];
@@ -103,15 +96,6 @@ $(document).ready(function(){
         }
     };
 
-//vecot data
-    //analyzingDBJSONData(vectorDBObject, 0);
-//image data
-    //analyzingDBJSONData(imageDBObject, 1);
-//dem data
-    //analyzingDBJSONData(demDBObject, 2);
-//scanning data
-    //analyzingDBJSONData(scanningDBObject, 3);
-//other data
     //request DB file from server
     $.ajax({
         type: 'GET',
