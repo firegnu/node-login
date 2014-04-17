@@ -67,6 +67,13 @@ module.exports = function(app) {
         dataJson.push(qitaData);
         res.json(dataJson);
     });
+
+//get worldmap Geojson file
+    app.get('/worldmap', function(req, res) {
+        fs.readFile('c:\\world.json', function(err, data) {
+            res.json(data);
+        });
+    });
 // logged-in user homepage //
 	
 	app.get('/home', function(req, res) {

@@ -1,6 +1,12 @@
 
 $(document).ready(function(){
 
+    /*$('.js-loading-bar').modal().css({
+        'margin-top': function () {
+            return $(this).height() / 2;
+        }
+    });*/
+
 	var hc = new HomeController();
 	var av = new AccountValidator();
 	//
@@ -32,13 +38,10 @@ $(document).ready(function(){
 	});
 
 	$('#name-tf').focus();
-	$('#github-banner').css('top', '41px');
-// customize the account settings form //
-//modalmyprofile
+	//$('#github-banner').css('top', '41px');
+    //modalmyprofile
     $('#modalmyprofile').modal({ show : false, keyboard : true, backdrop : true });
-
-// setup the confirm window that displays when the user chooses to delete their account //
-
+    // setup the confirm window that displays when the user chooses to delete their account //
 	$('.modal-confirm').modal({ show : false, keyboard : true, backdrop : true });
 	$('.modal-confirm .modal-header h3').text('Delete Account');
 	$('.modal-confirm .modal-body p').html('Are you sure you want to delete your account?');
@@ -46,6 +49,21 @@ $(document).ready(function(){
 	$('.modal-confirm .submit').html('Delete');
 	$('.modal-confirm .submit').addClass('btn-danger');
 
+    $('.js-loading-bar').modal({backdrop: 'static',show: true
+    }).on('shown.bs.modal', function( event ) {
+        var $bar = $(event.target).find('.progress-bar');
+        $bar.addClass('animate');
+    });
+    var progress = setInterval(function() {
+        var $bar = $('.progress-bar');
+
+        if ($bar.width()==400) {
+            $('.progress').removeClass('active');
+        } else {
+            $bar.width($bar.width()+200);
+        }
+        $bar.text($bar.width()/4 + "%");
+    }, 800);
     //request DB file from server
     $.ajax({
         type: 'GET',
@@ -68,9 +86,28 @@ $(document).ready(function(){
                     $('#giscontent').jstree(true).search(v);
                 }, 250);
             });
+            //request worldmap from server
+            $.ajax({
+                type: 'GET',
+                url: '/worldmap',
+                success: function(data) {
+                    $('.progress-bar').width(400);
+                    $('.progress-bar').text(100 + "%");
+                    //paint worldmap
+
+                    //
+                    clearInterval(progress);
+                    $('.js-loading-bar').modal('hide');
+                    $('.progress-bar').removeClass('animate');
+                },
+                fail: function(data) {
+                    //alert('request world map fail!');
+                }
+            });
         },
         fail: function(data) {
             alert('DB server do not response');
         }
     });
+
 })
