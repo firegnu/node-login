@@ -3,6 +3,8 @@ var CT = require('./modules/country-list');
 var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
 
+var fs = require('fs');
+
 module.exports = function(app) {
 
 // main login page //
@@ -38,7 +40,33 @@ module.exports = function(app) {
 			}
 		});
 	});
-	
+
+//return qita dbfile json
+    app.get('/dbQitafile', function(req, res) {
+        fs.readFile('C:\\SQLDB_DATUM.json', 'utf-8', function(err, data) {
+            if(err) {
+                res.json({data: "fail"});
+            }
+            else {
+                res.json(data);
+            }
+        });
+    });
+//return dem dbfile json
+    app.get('/dbfile', function(req, res) {
+        var dataJson = [];
+        var demData = fs.readFileSync('C:\\SQLDB_DEM.json', 'utf-8');
+        var qitaData = fs.readFileSync('C:\\SQLDB_DATUM.json', 'utf-8');
+        var imageData = fs.readFileSync('C:\\SQLDB_IMAGE.json', 'utf-8');
+        var vectorData = fs.readFileSync('C:\\SQLDB_VECTOR.json', 'utf-8');
+        var scanningData = fs.readFileSync('C:\\SQLDB_SCANIMG.json', 'utf-8');
+        dataJson.push(vectorData);
+        dataJson.push(imageData);
+        dataJson.push(demData);
+        dataJson.push(scanningData);
+        dataJson.push(qitaData);
+        res.json(dataJson);
+    });
 // logged-in user homepage //
 	
 	app.get('/home', function(req, res) {

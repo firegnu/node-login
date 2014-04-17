@@ -30,6 +30,7 @@ $(document).ready(function(){
 			}
 		}
 	});
+
 	$('#name-tf').focus();
 	$('#github-banner').css('top', '41px');
 // customize the account settings form //
@@ -82,12 +83,13 @@ $(document).ready(function(){
     var scanningDBObject = eval(SQLDB_SCANIMG);
     var imageDBObject = eval(SQLDB_IMAGE);
     var demDBObject = eval(SQLDB_DEM);
-    var qitaDBObject = eval(SQLDB_DATUM);
+    //var qitaDBObject = eval(SQLDB_DATUM);
 
-    var analyzingDBJSONData = function(dbObect, treeIndex) {
+    var analyzingDBJSONData = function(dbObject, treeIndex) {
+        //var dbObject = JSON.parse(dbObect);
         var formatArray = [];
-        for(var i = 0; i < dbObect.data.length; i++) {
-            var dbData = dbObect.data[i];
+        for(var i = 0; i < dbObject.data.length; i++) {
+            var dbData = dbObject.data[i];
             if(formatArray.indexOf(dbData.数据格式) !== -1) {
                 treeData[treeIndex].children[0].children[formatArray.indexOf(dbData.数据格式)].children.push(dbData.数据名称);
                 continue;
@@ -100,26 +102,40 @@ $(document).ready(function(){
             treeData[treeIndex].children[0].children[formatArray.indexOf(dbData.数据格式)].children.push(dbData.数据名称);
         }
     };
+
 //vecot data
-    analyzingDBJSONData(vectorDBObject, 0);
+    //analyzingDBJSONData(vectorDBObject, 0);
 //image data
-    analyzingDBJSONData(imageDBObject, 1);
+    //analyzingDBJSONData(imageDBObject, 1);
 //dem data
-    analyzingDBJSONData(demDBObject, 2);
+    //analyzingDBJSONData(demDBObject, 2);
 //scanning data
-    analyzingDBJSONData(scanningDBObject, 3);
+    //analyzingDBJSONData(scanningDBObject, 3);
 //other data
-    analyzingDBJSONData(qitaDBObject, 4);
-//setup tree
-    $('#giscontent').jstree({'plugins':["search", "state", "wholerow"], 'core' : {
-        'data' : treeData
-    }});
-    var to = false;
-    $('#treesearch').keyup(function () {
-        if(to) { clearTimeout(to); }
-        to = setTimeout(function () {
-            var v = $('#treesearch').val();
-            $('#giscontent').jstree(true).search(v);
-        }, 250);
+    //request DB file from server
+    $.ajax({
+        type: 'GET',
+        url: '/dbfile',
+        success: function(data) {
+            analyzingDBJSONData(JSON.parse(data[0]), 0);
+            analyzingDBJSONData(JSON.parse(data[1]), 1);
+            analyzingDBJSONData(JSON.parse(data[2]), 2);
+            analyzingDBJSONData(JSON.parse(data[3]), 3);
+            analyzingDBJSONData(JSON.parse(data[4]), 4);
+            $('#giscontent').jstree({'plugins':["search", "state", "wholerow"], 'core' : {
+                'data' : treeData
+            }});
+            var to = false;
+            $('#treesearch').keyup(function () {
+                if(to) { clearTimeout(to); }
+                to = setTimeout(function () {
+                    var v = $('#treesearch').val();
+                    $('#giscontent').jstree(true).search(v);
+                }, 250);
+            });
+        },
+        fail: function(data) {
+            alert('DB server do not response');
+        }
     });
 })
