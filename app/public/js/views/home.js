@@ -91,19 +91,28 @@ $(document).ready(function(){
                 type: 'GET',
                 url: '/worldmap',
                 success: function(data) {
-                    $('.progress-bar').width(400);
-                    $('.progress-bar').text(100 + "%");
                     //paint worldmap
-
-                    //
-                    clearInterval(progress);
-                    $('.js-loading-bar').modal('hide');
-                    $('.progress-bar').removeClass('animate');
+                    alert('cc');
                 },
                 fail: function(data) {
                     //alert('request world map fail!');
                 }
             });
+        },
+        fail: function(data) {
+
+        }
+    });
+    //request FakeDB file from server
+    $.ajax({
+        type: 'GET',
+        url: '/fakeWorldmap',
+        success: function(data) {
+            $('.progress-bar').width(400);
+            $('.progress-bar').text(100 + "%");
+            clearInterval(progress);
+            $('.js-loading-bar').modal('hide');
+            $('.progress-bar').removeClass('animate');
         },
         fail: function(data) {
             alert('DB server do not response');

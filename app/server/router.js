@@ -70,6 +70,12 @@ module.exports = function(app) {
 
 //get worldmap Geojson file
     app.get('/worldmap', function(req, res) {
+        fs.readFile('c:\\world.json', 'utf-8' ,function(err, data) {
+            res.json(data);
+        });
+    });
+
+    app.get('/fakeWorldmap', function(req, res) {
         fs.readFile('c:\\world.json', function(err, data) {
             res.json(data);
         });
