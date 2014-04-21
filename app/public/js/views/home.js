@@ -1,12 +1,6 @@
 
 $(document).ready(function(){
 
-    /*$('.js-loading-bar').modal().css({
-        'margin-top': function () {
-            return $(this).height() / 2;
-        }
-    });*/
-
 	var hc = new HomeController();
 	var av = new AccountValidator();
 	//
@@ -69,14 +63,14 @@ $(document).ready(function(){
         type: 'GET',
         url: '/dbfile',
         success: function(data) {
-            analyzingDBJSONData(JSON.parse(data[0]), 0);
-            analyzingDBJSONData(JSON.parse(data[1]), 1);
-            analyzingDBJSONData(JSON.parse(data[2]), 2);
-            analyzingDBJSONData(JSON.parse(data[3]), 3);
-            analyzingDBJSONData(JSON.parse(data[4]), 4);
+            treeView.analyzingDBJSONData(JSON.parse(data[0]), 0);
+            treeView.analyzingDBJSONData(JSON.parse(data[1]), 1);
+            treeView.analyzingDBJSONData(JSON.parse(data[2]), 2);
+            treeView.analyzingDBJSONData(JSON.parse(data[3]), 3);
+            treeView.analyzingDBJSONData(JSON.parse(data[4]), 4);
             $('#giscontent').jstree({
                 'plugins':["search", "state", "wholerow", "unique", "types"], 'core' : {
-                'data' : treeData
+                'data' : treeView.treeData
             }});
             var to = false;
             $('#treesearch').keyup(function () {
@@ -92,7 +86,12 @@ $(document).ready(function(){
                 url: '/worldmap',
                 success: function(data) {
                     //paint worldmap
-                    alert('cc');
+                    worldMapView.draw(data);
+                    $('.progress-bar').width(400);
+                    $('.progress-bar').text(100 + "%");
+                    clearInterval(progress);
+                    $('.js-loading-bar').modal('hide');
+                    $('.progress-bar').removeClass('animate');
                 },
                 fail: function(data) {
                     //alert('request world map fail!');
@@ -108,11 +107,24 @@ $(document).ready(function(){
         type: 'GET',
         url: '/fakeWorldmap',
         success: function(data) {
-            $('.progress-bar').width(400);
-            $('.progress-bar').text(100 + "%");
-            clearInterval(progress);
-            $('.js-loading-bar').modal('hide');
-            $('.progress-bar').removeClass('animate');
+            $('#giscontent').on('changed.jstree', function (e, data) {
+                var r = [];
+                if(data.instance.get_node(data.selected[0]).children.length === 0) {
+                    r.push(data.instance.get_node(data.selected[0]).data);
+                    var alertMsg = data.instance.get_node(data.selected[0]).data.数据类型 + '\n';
+                    alertMsg += data.instance.get_node(data.selected[0]).data.数据名称 + '\n';
+                    alertMsg += data.instance.get_node(data.selected[0]).data.比例尺 + '\n';
+                    alertMsg += data.instance.get_node(data.selected[0]).data.图名 + '\n';
+                    alertMsg += data.instance.get_node(data.selected[0]).data.数据格式 + '\n';
+                    alertMsg += data.instance.get_node(data.selected[0]).data.数据来源 + '\n';
+                    alertMsg += data.instance.get_node(data.selected[0]).data.生产日期 + '\n';
+                    alertMsg += data.instance.get_node(data.selected[0]).data.入库时间 + '\n';
+                    alertMsg += data.instance.get_node(data.selected[0]).data.数据描述;
+                    if(r.length !== 0) {
+                        alert(alertMsg);
+                    }
+                }
+            });
         },
         fail: function(data) {
             alert('DB server do not response');
