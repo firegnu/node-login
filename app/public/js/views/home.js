@@ -69,7 +69,7 @@ $(document).ready(function(){
             treeView.analyzingDBJSONData(JSON.parse(data[3]), 3);
             treeView.analyzingDBJSONData(JSON.parse(data[4]), 4);
             $('#giscontent').jstree({
-                'plugins':["search", "state", "wholerow", "unique", "types", "contextmenu"], contextmenu: {items: treeView.customMenu}, 'core' : {
+                'plugins':["search", "state", "wholerow", "unique", "types", "contextmenu"], 'core' : {
                 'data' : treeView.treeData
             }});
             var to = false;
@@ -102,28 +102,41 @@ $(document).ready(function(){
 
         }
     });
+
     //request FakeDB file from server
     $.ajax({
         type: 'GET',
         url: '/fakeWorldmap',
         success: function(data) {
             $('#giscontent').on('changed.jstree', function (e, data) {
-                /*var r = [];
+                var r = [];
                 if(data.instance.get_node(data.selected[0]).children.length === 0) {
                     r.push(data.instance.get_node(data.selected[0]).data);
-                    var alertMsg = data.instance.get_node(data.selected[0]).data.数据类型 + '\n';
-                    alertMsg += data.instance.get_node(data.selected[0]).data.数据名称 + '\n';
-                    alertMsg += data.instance.get_node(data.selected[0]).data.比例尺 + '\n';
-                    alertMsg += data.instance.get_node(data.selected[0]).data.图名 + '\n';
-                    alertMsg += data.instance.get_node(data.selected[0]).data.数据格式 + '\n';
-                    alertMsg += data.instance.get_node(data.selected[0]).data.数据来源 + '\n';
-                    alertMsg += data.instance.get_node(data.selected[0]).data.生产日期 + '\n';
-                    alertMsg += data.instance.get_node(data.selected[0]).data.入库时间 + '\n';
-                    alertMsg += data.instance.get_node(data.selected[0]).data.数据描述;
+                    var nodeData = data.instance.get_node(data.selected[0]).data;
+                    var pathCircleStr = "<h6><font color=red>" + "数据类型:</font>:" + nodeData.数据类型 + "" + "</h6>";
+                    pathCircleStr += "<h6><font color=red>" + "数据名称:</font>:" + nodeData.数据名称 + "" + "</h6>";
+                    pathCircleStr += "<h6><font color=red>" + "比例尺:</font>:" + nodeData.比例尺 + "</h6>";
+                    pathCircleStr += "<h6><font color=red>" + "图名:</font>:" + nodeData.图名 + "" + "</h6>";
+                    pathCircleStr += "<h6><font color=red>" + "数据格式:</font>:" + nodeData.数据格式 + "</h6>";
+                    pathCircleStr += "<h6><font color=red>" + "数据来源:</font>:" + nodeData.数据来源 + "" + "</h6>";
+                    pathCircleStr += "<h6><font color=red>" + "生产日期:</font>:" + nodeData.生产日期 + "</h6>";
+                    pathCircleStr += "<h6><font color=red>" + "入库日期:</font>:" + nodeData.入库时间 + "</h6>";
+                    pathCircleStr += "<h6><font color=red>" + "数据描述:</font>:" + nodeData.数据描述 + "</h6>";
+                    pathCircleStr += '<button type="button" class="btn btn-xs btn-success">Download</button>';
+                    var tableData = {};
+                    tableData.column_0 = nodeData.数据类型;
+                    tableData.column_1 = nodeData.数据名称;
+                    tableData.column_2 = nodeData.比例尺;
+                    tableData.column_3 = nodeData.图名;
+                    tableData.column_4 = nodeData.数据格式;
+                    tableData.column_5 = nodeData.数据来源;
+                    tableData.column_6 = nodeData.生产日期;
+                    tableData.column_7 = nodeData.入库时间;
+                    tableData.column_8 = nodeData.数据描述;
                     if(r.length !== 0) {
-                        alert(alertMsg);
+                        treeView.mouseEnterTip(pathCircleStr, data.event.clientX, data.event.clientY, '数据基本情况', tableData);
                     }
-                }*/
+                }
             });
         },
         fail: function(data) {

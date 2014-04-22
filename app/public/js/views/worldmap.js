@@ -106,29 +106,6 @@
         });
     };
 
-    var mouseEnterTip = function(contentText, x, y, title) {
-        $('#mapcanvas').qtip({
-            content: {
-                text: contentText,
-                title: {
-                    text: title
-                }
-            },
-            position: {
-                target: [x, y]
-            },
-            show: {
-                event: false,
-                solo: true,
-                ready: true
-            },
-            hide: {
-                //leave: true,
-                distance: 15
-            },
-            style: 'qtip-shadow qtip-rounded qtip-jtools'
-        });
-    };
 
     var drawMap = function(countryArray, scale) {
         var countryGroup = new paper.Group();

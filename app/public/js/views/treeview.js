@@ -36,29 +36,45 @@
         }
     ];
 
-    treeView.customMenu = function(node) {
-        var items = {
-            downloadItem: {
-                label: "Download",
-                action: function () {
-                    /*var alertMsg = $(node)[0].data.数据类型 + '\n';
-                    alertMsg += $(node)[0].data.数据名称 + '\n';
-                    alertMsg += $(node)[0].data.比例尺 + '\n';
-                    alertMsg += $(node)[0].data.图名 + '\n';
-                    alertMsg += $(node)[0].data.数据格式 + '\n';
-                    alertMsg += $(node)[0].data.数据来源 + '\n';
-                    alertMsg += $(node)[0].data.生产日期 + '\n';
-                    alertMsg += $(node)[0].data.入库时间 + '\n';
-                    alertMsg += 'sss:' + $(node)[0].data.数据描述;
-                    alert(alertMsg);*/
-                    $('.modal-treeview-download').modal({ show : true, keyboard : true, backdrop : true });
-                }
+    treeView.mouseEnterTip = function(contentText, x, y, title, tableData) {
+        $('#giscontent').qtip({
+            content: {
+                text: contentText,
+                title: {
+                    text: title
+                },
+                button: 'close'
+            },
+            position: {
+                target: [x, y]
+            },
+            show: {
+                event: false,
+                solo: true,
+                ready: true
+            },
+            hide: {
+                fixed: true,
+                delay: 300
+            },
+            style: 'qtip-shadow qtip-rounded qtip-jtools',
+            events: {
+                render: function(event, api) {
+                    $('button', api.elements.content).click(function(e) {
+                        api.hide(e);
+                        treeViewDownload.jsonData.data.length = 0;
+                        treeViewDownload.jsonData.data.push(tableData);
+                        treeViewDownload.jsonData.totalRows = treeViewDownload.jsonData.data.length;
+                        treeViewDownload.loadTreeviewDownloadData();
+                        $('.modal-treeview-download').modal({ show : true, keyboard : true, backdrop : true });
+                        treeViewDownload.jsonData.perPage = 10;
+                        //hard code???how to redraw the datatable
+                        $($('.modal-dialog-treeview-download li')[0]).click();
+                    });
+                },
+                hide: function(event, api) { api.destroy(); }
             }
-        };
-        if ($(node)[0].children.length > 0) {
-            delete items.downloadItem;
-        }
-        return items;
+        });
     };
 
     treeView.analyzingDBJSONData = function(dbObject, treeIndex) {
