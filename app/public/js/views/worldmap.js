@@ -148,13 +148,13 @@
                     path.add(point);
                 }
                 path.closePath();
-                path.onMouseEnter = function(data, event) {
+                /*path.onMouseEnter = function(data, event) {
                     this.fillColor = 'pink';
                     mouseEnterTip('', data.event.clientX, data.event.clientY, this.name);
                 };
                 path.onMouseLeave = function() {
                     this.fillColor = 'cyan';
-                };
+                };*/
                 if(!bName) {
                     var pathBound = path.bounds;
                     /*var countryName = new paper.PointText({

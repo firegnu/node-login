@@ -36,6 +36,31 @@
         }
     ];
 
+    treeView.customMenu = function(node) {
+        var items = {
+            downloadItem: {
+                label: "Download",
+                action: function () {
+                    /*var alertMsg = $(node)[0].data.数据类型 + '\n';
+                    alertMsg += $(node)[0].data.数据名称 + '\n';
+                    alertMsg += $(node)[0].data.比例尺 + '\n';
+                    alertMsg += $(node)[0].data.图名 + '\n';
+                    alertMsg += $(node)[0].data.数据格式 + '\n';
+                    alertMsg += $(node)[0].data.数据来源 + '\n';
+                    alertMsg += $(node)[0].data.生产日期 + '\n';
+                    alertMsg += $(node)[0].data.入库时间 + '\n';
+                    alertMsg += 'sss:' + $(node)[0].data.数据描述;
+                    alert(alertMsg);*/
+                    $('.modal-treeview-download').modal({ show : true, keyboard : true, backdrop : true });
+                }
+            }
+        };
+        if ($(node)[0].children.length > 0) {
+            delete items.downloadItem;
+        }
+        return items;
+    };
+
     treeView.analyzingDBJSONData = function(dbObject, treeIndex) {
         var formatArray = [];
         for(var i = 0; i < dbObject.data.length; i++) {

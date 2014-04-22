@@ -19,6 +19,8 @@ block content
 						a(href='#about') About
 					li#myprofile
 						a() MyProfile
+					li
+						a(href='#Search') Search
 			button#btn-logout.btn.btn-primary
 				i.icon-lock.icon-white
 				| Sign Out
@@ -32,6 +34,7 @@ block content
 	include modals/alert
 	include modals/confirm
 	include modals/progressbar
+	include modals/treeview-download
 
 block scripts
 	script(src='/vendor/jquery.min.js')
@@ -42,8 +45,10 @@ block scripts
 	script(src='/vendor/jquery.mousewheel.js')
 	script(src='/vendor/qtip2/jquery.qtip.js')
 	script(src='/vendor/paper/paper.js')
+	script(src='/vendor/bootstrap-datatable.js')
 	script(src='/js/views/treeview.js')
 	script(src='/js/views/worldmap.js')
+	script(src='/js/views/treeviewdownload.js')
 	script(src='/js/views/home.js')
 	script(src='/js/controllers/homeController.js')
 	script(src='/js/form-validators/accountValidator.js')

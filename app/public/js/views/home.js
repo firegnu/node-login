@@ -69,7 +69,7 @@ $(document).ready(function(){
             treeView.analyzingDBJSONData(JSON.parse(data[3]), 3);
             treeView.analyzingDBJSONData(JSON.parse(data[4]), 4);
             $('#giscontent').jstree({
-                'plugins':["search", "state", "wholerow", "unique", "types"], 'core' : {
+                'plugins':["search", "state", "wholerow", "unique", "types", "contextmenu"], contextmenu: {items: treeView.customMenu}, 'core' : {
                 'data' : treeView.treeData
             }});
             var to = false;
@@ -108,7 +108,7 @@ $(document).ready(function(){
         url: '/fakeWorldmap',
         success: function(data) {
             $('#giscontent').on('changed.jstree', function (e, data) {
-                var r = [];
+                /*var r = [];
                 if(data.instance.get_node(data.selected[0]).children.length === 0) {
                     r.push(data.instance.get_node(data.selected[0]).data);
                     var alertMsg = data.instance.get_node(data.selected[0]).data.数据类型 + '\n';
@@ -123,7 +123,7 @@ $(document).ready(function(){
                     if(r.length !== 0) {
                         alert(alertMsg);
                     }
-                }
+                }*/
             });
         },
         fail: function(data) {
