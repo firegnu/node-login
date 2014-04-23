@@ -25,6 +25,7 @@
         $("#table-container_1").datatable({
             perPage: 10
             , url: ''
+            , title: '搜索结果'
             , data: treeViewDownload.jsonData
             , showPagination: true
             , showFilter: true

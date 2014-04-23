@@ -67,7 +67,7 @@
                         treeViewDownload.jsonData.totalRows = treeViewDownload.jsonData.data.length;
                         treeViewDownload.loadTreeviewDownloadData();
                         $('.modal-treeview-download').modal({ show : true, keyboard : true, backdrop : true });
-                        treeViewDownload.jsonData.perPage = 10;
+                        treeViewDownload.jsonData.perPage = 1000;
                         //hard code???how to redraw the datatable
                         $($('.modal-dialog-treeview-download li')[0]).click();
                     });
@@ -119,6 +119,7 @@
                     if(dbObject.data[k].数据格式 === formatName && dbObject.data[k].数据名称 === dataName) {
                         var leafName = {"text" : dbObject.data[k].图名, "state" : {"opened": false, "selected" : false }, "data": dbObject.data[k]};
                         treeView.treeData[treeIndex].children[0].children[i].children[j].children.push(leafName);
+                        search.allDataDB.push(leafName);
                     }
                 }
             }

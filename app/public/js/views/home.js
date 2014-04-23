@@ -3,7 +3,7 @@ $(document).ready(function(){
 
 	var hc = new HomeController();
 	var av = new AccountValidator();
-	//
+
     $('#giscontent').css({'height': (window.innerHeight - 52)*0.9});
     $('#giscontent').css({'width': '300px'});
     //
