@@ -24,6 +24,9 @@ function HomeController()
             'selectedText': 'cat'
         });
     });
+    $('#search').click(function() {
+        $('#searchmodal').modal({ show : true, keyboard : true, backdrop : true });
+    });
 // confirm account deletion //
 	$('#account-form-btn1').click(function(){$('.modal-confirm').modal('show')});
 

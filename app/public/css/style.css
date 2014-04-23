@@ -179,3 +179,12 @@ button i {
 .modal-dialog-treeview-download {
   width: 920px;
 }
+#searchcontent {
+  width: 100%;
+}
+.container {
+  width: 880px;
+}
+#message {
+  height: 257px;
+}

@@ -35,6 +35,7 @@ $(document).ready(function(){
 	//$('#github-banner').css('top', '41px');
     //modalmyprofile
     $('#modalmyprofile').modal({ show : false, keyboard : true, backdrop : true });
+
     // setup the confirm window that displays when the user chooses to delete their account //
 	$('.modal-confirm').modal({ show : false, keyboard : true, backdrop : true });
 	$('.modal-confirm .modal-header h3').text('Delete Account');

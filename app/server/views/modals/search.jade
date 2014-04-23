@@ -1,0 +1,65 @@
+#searchmodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+	.modal-dialog.modal-dialog-treeview-download
+		.modal-content
+			.modal-header
+				button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+				h4
+			.modal-body
+				.container
+					.row
+						#searchcontent.col-md-8
+							.well.well-sm
+								form
+									.row
+										.col-md-6
+											.form-group
+												label(for='name')
+													| 图名
+												input#name.form-control(type='text', placeholder='Enter name', required='required')
+											.form-group
+												label(for='name')
+													| 数据名称
+												input#name.form-control(type='text', placeholder='Enter name', required='required')
+											.form-group
+												label(for='subject')
+													| 数据类型
+												select#subject.form-control(name='subject', required='required')
+													option(value='na', selected='') Choose One:
+													option(value='service') General Customer Service
+													option(value='suggestions') Suggestions
+													option(value='product') Product Support
+											.form-group
+												label(for='subject')
+													| 比例尺
+												select#subject.form-control(name='subject', required='required')
+													option(value='na', selected='') Choose One:
+													option(value='service') General Customer Service
+													option(value='suggestions') Suggestions
+													option(value='product') Product Support
+											.form-group
+												label(for='subject')
+													| 数据格式
+												select#subject.form-control(name='subject', required='required')
+													option(value='na', selected='') Choose One:
+													option(value='service') General Customer Service
+													option(value='suggestions') Suggestions
+													option(value='product') Product Support
+										.col-md-6
+											#description.form-group
+												label(for='name')
+													| 数据描述
+												textarea#message.form-control(name='message', rows='9', cols='25', required='required', placeholder='Message')
+											.form-group
+												label(for='subject')
+													| 生产日期
+												select#subject.form-control(name='subject', required='required')
+													option(value='na', selected='') Choose One:
+													option(value='service') General Customer Service
+													option(value='suggestions') Suggestions
+													option(value='product') Product Support
+										.col-md-12
+											button#btnContactUs.btn.btn-primary.pull-right(type='submit')
+												| 搜索
+			.modal-footer
+				button.cancel.btn.btn-default(type='button', data-dismiss='modal') Cancel
+				button.submit.btn Ok
