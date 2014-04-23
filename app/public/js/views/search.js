@@ -84,6 +84,7 @@
             var leafData = search.allDataDB[i].data;
             if(leafData.数据类型 === searchType && leafData.比例尺 === searchBlc && leafData.数据格式 === searchFormat) {
                 var searResultData = {};
+                searResultData.column_00 = '';
                 searResultData.column_0 = leafData.数据类型;
                 searResultData.column_1 = leafData.数据名称;
                 searResultData.column_2 = leafData.比例尺;
@@ -93,6 +94,7 @@
                 searResultData.column_6 = leafData.生产日期;
                 searResultData.column_7 = leafData.入库时间;
                 searResultData.column_8 = leafData.数据描述;
+                searResultData.column_9 = leafData.数据路径;
                 search.jsonData.data.push(searResultData);
             }
         }
@@ -106,11 +108,16 @@
             perPage: 1000
             , url: ''
             , data: search.jsonData
+            , checkbox: true
             , title: '搜索结果'
             , showPagination: true
             , showFilter: true
             , filterModal: $("#myModal")
             , columns: [
+                {
+                    title: "#"
+                    , field: "column_00"
+                },
                 {
                     title: "数据类型"
                     , sortable: true
@@ -172,9 +179,44 @@
                     , css: {
                         textAlign: 'right'
                     }
+                },
+                {
+                    title: "数据路径"
+                    , sortable: false
+                    , field: "column_9"
+                    , filter: true
+                    , css: {
+                    display: 'none'
+                }
                 }
             ]
         });
         $($('#searchmodal li')[0]).click();
+        for(var i = 0; i < $('#searchmodal tbody').find('tr').length; i++) {
+            $($($('#searchmodal tbody').find('tr'))[i]).find('td')[1].remove();
+        }
+        $('.searchcheckbox').click(function() {
+            if($(this).is(':checked')) {
+                $(this).parent().parent().find('td').css({'background-color': '#47a447'});
+            }
+            else {
+                $(this).parent().parent().find('td').css({'background-color': 'white'});
+            }
+        });
     });
+
+    $('#searchmodal').on('hidden.bs.modal', function () {
+        search.jsonData.data.length = 0;
+        $($('#searchmodal li')[0]).click();
+    });
+
+    $('.searchdownloadbtn').click(function() {
+        for(var i = 0; i < $('.searchcheckbox').length; i++) {
+            if($($('.searchcheckbox')[i]).is(':checked')) {
+                //start download selected files
+                alert($($('.searchcheckbox')[i]).parent().parent().find('td:last').text());
+            }
+        }
+    });
+
 })(window.search = window.search || {});

@@ -475,8 +475,10 @@
     , row: function ( rowdata ) {
         var $row = $("<tr></tr>")
           , o = this.options;
-
         // loop through the columns
+        if(o.checkbox) {
+            $row.append('<td><input type="checkbox" class="searchcheckbox"></td>');
+        }
         for(var column in o.columns) {
           var cell = this.cell( rowdata, column );
           $row.append(cell);
@@ -1264,6 +1266,7 @@
     toggleColumns: true,
     url: '',
     data: {},
+    checkbox: false,
     columns: [],
     ascending: $("<span></span>").addClass("glyphicon glyphicon-chevron-up"),
     descending: $("<span></span>").addClass("glyphicon glyphicon-chevron-down"),

@@ -134,6 +134,7 @@ $(document).ready(function(){
                     tableData.column_6 = nodeData.生产日期;
                     tableData.column_7 = nodeData.入库时间;
                     tableData.column_8 = nodeData.数据描述;
+                    tableData.column_9 = nodeData.数据路径;
                     if(r.length !== 0) {
                         treeView.mouseEnterTip(pathCircleStr, data.event.clientX, data.event.clientY, '数据基本情况', tableData);
                     }

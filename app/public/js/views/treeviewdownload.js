@@ -93,8 +93,28 @@
                         textAlign: 'right'
                     }
                 }
+                ,{
+                    title: "数据路径"
+                    , sortable: false
+                    , field: "column_9"
+                    , filter: true
+                    , css: {
+                        display: 'none'
+                    }
+                }
             ]
         });
+
     };
+
+    $('.treeviewdownloadbtn').click(function() {
+        alert($('.modal-dialog-treeview-download').find('td:last').text());
+    });
+
+    $('.modal-treeview-download').on('shown.bs.modal', function() {
+        for(var i = 0; i < $('.modal-dialog-treeview-download').find('td').length; i++) {
+            $($('.modal-dialog-treeview-download').find('td')[i]).css({'background-color': 'rgba(71, 164, 71, 0.8)'});
+        }
+    });
 
 })(window.treeViewDownload = window.treeViewDownload || {});
