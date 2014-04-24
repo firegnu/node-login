@@ -1,14 +1,16 @@
 
 $(document).ready(function(){
-
+    $('body').css('background',"rgb(0,0,0)");
 	var hc = new HomeController();
 	var av = new AccountValidator();
 
-    $('#giscontent').css({'height': (window.innerHeight - 52)*0.9});
+    $('#giscontent').css({'height': (window.innerHeight - 5)*0.9});
     $('#giscontent').css({'width': '300px'});
     //
-    $('#mapcanvas').css({'height': (window.innerHeight - 52)*0.9 + 44});
+    $('#mapcanvas').css({'height': (window.innerHeight - 5)*0.9 + 44});
     $('#mapcanvas').css({'width': (window.innerWidth - 310)});
+    $('#mapcanvas').css({'margin-top': '-954px'});
+    //margin-top -954px
 	$('#account-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
 			if (av.validateForm() == false){

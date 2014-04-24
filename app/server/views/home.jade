@@ -16,18 +16,21 @@ block content
 					li.active
 						a(href='#') Home
 					li
-						a(href='#about') About
+						a(href='#') MyHistory
 					li#myprofile
 						a() MyProfile
 					li#search
 						a() Search
-			button#btn-logout.btn.btn-primary
-				i.icon-lock.icon-white
-				| Sign Out
-	div
+			button#btn-logout.btn.btn-primary.glyphicon.glyphicon-log-out
+				//i.icon-lock.icon-white
+				//| Sign Out
+	div#content
 		div#treediv
+			div#searchdiv.btn-group
+				//span.input-group-addon @
+				input#treesearch.input-xlarge.form-control(type='text')
+				span#searchclear.glyphicon.glyphicon-search
 			div#giscontent
-			input#treesearch.input-xlarge.form-control(type='text')
 		div#canvascontainer
 			canvas#mapcanvas
 	include modals/profile-account
@@ -36,6 +39,9 @@ block content
 	include modals/progressbar
 	include modals/treeview-download
 	include modals/search.jade
+	//div#footer
+		div.container
+			p.text-muted @firegnu 2014
 
 block scripts
 	script(src='/vendor/jquery.min.js')

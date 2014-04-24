@@ -16,10 +16,6 @@
 												| 图名
 											input#searchname.form-control(type='text', placeholder='Enter name', required='required')
 										.form-group
-											label(for='name')
-												| 数据名称
-											input#searchdataname.form-control(type='text', placeholder='Enter name', required='required')
-										.form-group
 											label(for='subject')
 												| 数据类型
 											select#searchdatatypeselect.form-control(name='subject', required='required')
@@ -46,15 +42,19 @@
 												option(value='product') 2.5万
 												option(value='product') 1万
 												option(value='product') 其他
-										.form-group
-											label(for='subject')
-												| 数据格式
-											select#searchdataformatselect.form-control(name='subject', required='required')
 									.col-md-6
 										#searchdescription.form-group
 											label(for='name')
 												| 数据描述
 											textarea#message.form-control(name='message', rows='9', cols='25', required='required', placeholder='Message')
+										.form-group
+											label(for='name')
+												| 数据名称
+											input#searchdataname.form-control(type='text', placeholder='Enter name', required='required')
+										.form-group
+											label(for='subject')
+												| 数据格式
+											select#searchdataformatselect.form-control(name='subject', required='required')
 										#searchproduceDate.form-group
 											label(for='subject')
 												| 生产日期

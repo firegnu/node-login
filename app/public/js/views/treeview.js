@@ -5,33 +5,33 @@
 
     treeView.treeData = [
         {
-            "text" : "矢量数据",
+            "text" : "矢量数据","icon":"glyphicon glyphicon-folder-open",
             "children" : [
-                { "text" : "数据格式", "state" : {"opened": false,"selected" : false },  "children" : []}
+                { "text" : "数据格式", "state" : {"opened": false,"selected" : false },  "icon":"glyphicon glyphicon-folder-open", "children" : []}
             ]
         },
         {
-            "text" : "影像数据",
+            "text" : "影像数据","icon":"glyphicon glyphicon-folder-open",
             "children" : [
-                { "text" : "数据格式", "state" : {"opened": false, "selected" : false }, "children" : []}
+                { "text" : "数据格式", "state" : {"opened": false, "selected" : false }, "icon":"glyphicon glyphicon-folder-open", "children" : []}
             ]
         },
         {
-            "text" : "DEM数据",
+            "text" : "DEM数据","icon":"glyphicon glyphicon-folder-open",
             "children" : [
-                { "text" : "数据格式", "state" : {"opened": false, "selected" : false }, "children" : []}
+                { "text" : "数据格式", "state" : {"opened": false, "selected" : false }, "icon":"glyphicon glyphicon-folder-open", "children" : []}
             ]
         },
         {
-            "text" : "扫描数据",
+            "text" : "扫描数据","icon":"glyphicon glyphicon-folder-open",
             "children" : [
-                { "text" : "数据格式", "state" : {"opened": false, "selected" : false }, "children" : []}
+                { "text" : "数据格式", "state" : {"opened": false, "selected" : false }, "icon":"glyphicon glyphicon-folder-open", "children" : []}
             ]
         },
         {
-            "text" : "其他数据",
+            "text" : "其他数据","icon":"glyphicon glyphicon-folder-open",
             "children" : [
-                { "text" : "数据格式", "state" : {"opened": false, "selected" : false }, "children" : []}
+                { "text" : "数据格式", "state" : {"opened": false, "selected" : false },  "icon":"glyphicon glyphicon-folder-open", "children" : []}
             ]
         }
     ];
@@ -87,7 +87,7 @@
                 continue;
             }
             formatArray.push(dbData.数据格式);
-            var newFormat = {"text" : dbData.数据格式,"state" : {"opened": false, "selected" : false },
+            var newFormat = {"text" : dbData.数据格式,"state" : {"opened": false, "selected" : false }, "icon":"glyphicon glyphicon-folder-open",
                 "children" : [
                 ]};
             treeView.treeData[treeIndex].children[0].children.push(newFormat);
@@ -105,7 +105,7 @@
             ////have duplicate data and remove
             treeView.treeData[treeIndex].children[0].children[i].children = [];
             for(var j = 0; j < duplicateNameArray.length; j++) {
-                var newFormatName = {"text" : duplicateNameArray[j],
+                var newFormatName = {"text" : duplicateNameArray[j],"icon":"glyphicon glyphicon-folder-open",
                     "children" : [
                     ]};
                 treeView.treeData[treeIndex].children[0].children[i].children.push(newFormatName);
@@ -118,7 +118,7 @@
                 var dataName = treeView.treeData[treeIndex].children[0].children[i].children[j].text;
                 for(var k = 0; k < dbObject.data.length; k++) {
                     if(dbObject.data[k].数据格式 === formatName && dbObject.data[k].数据名称 === dataName) {
-                        var leafName = {"text" : dbObject.data[k].图名, "state" : {"opened": false, "selected" : false }, "data": dbObject.data[k]};
+                        var leafName = {"text" : dbObject.data[k].图名, "state" : {"opened": false, "selected" : false }, "icon":"glyphicon glyphicon-leaf", "data": dbObject.data[k]};
                         treeView.treeData[treeIndex].children[0].children[i].children[j].children.push(leafName);
                         search.allDataDB.push(leafName);
                     }

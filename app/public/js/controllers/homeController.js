@@ -16,7 +16,7 @@ function HomeController()
         $('#account-form-btn1').html('Delete');
         $('#account-form-btn1').addClass('btn-danger');
         $('#account-form-btn2').html('Update');
-        $('#modalmyprofile').modal('show');
+        $('#modalmyprofile').modal({ show : true, keyboard : true, backdrop : true });
         $('#modalmyprofile').css({'background-color': 'transparent'});
         $('#modalmyprofile').css({'border': 'none'});
         $('#modalmyprofile').css({'box-shadow': 'none'});

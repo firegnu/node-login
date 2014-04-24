@@ -106,7 +106,9 @@
         });
     };
 
+    var contriesColors = ['#A52A2A', '#FFFF00', '#32CD32', '#F5F5F5', '#F4A460'];
 
+    //5*Math.random()
     var drawMap = function(countryArray, scale) {
         var countryGroup = new paper.Group();
         var countries = new paper.Group();
@@ -116,8 +118,8 @@
             for(var j = 0; j < countryArray[i].geoPolygon.length; j++) {
                 var path = new paper.Path();
                 path.strokeColor = 'black';
-                path.opacity = 0.5;
-                path.fillColor = 'cyan';
+                //path.opacity = 0.5;
+                path.fillColor = contriesColors[parseInt(5*Math.random())];
                 path.name = countryArray[i].name;
                 for(var k = 0; k < countryArray[i].geoPolygon[j].length; k++) {
                     var point = new paper.Point((countryArray[i].geoPolygon[j][k].x - minX) * scale,
