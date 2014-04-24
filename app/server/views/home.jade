@@ -22,6 +22,7 @@ block content
 					li#search
 						a() Search
 			button#btn-logout.btn.btn-primary.glyphicon.glyphicon-log-out
+			button#btn-controlpanel.btn.btn-primary.glyphicon.glyphicon-tasks
 				//i.icon-lock.icon-white
 				//| Sign Out
 	div#content
@@ -38,7 +39,9 @@ block content
 	include modals/confirm
 	include modals/progressbar
 	include modals/treeview-download
-	include modals/search.jade
+	include modals/search
+	include modals/contextmenu
+	include modals/layercontroller
 	//div#footer
 		div.container
 			p.text-muted @firegnu 2014
@@ -57,8 +60,10 @@ block scripts
 	script(src='/js/views/treeview.js')
 	script(src='/js/views/worldmap.js')
 	script(src='/js/views/mapindex.js')
+	script(src='/js/views/contextmenu.js')
 	script(src='/js/views/treeviewdownload.js')
 	script(src='/js/views/search.js')
+	script(src='/js/views/layercontroller.js')
 	script(src='/js/views/home.js')
 	script(src='/js/controllers/homeController.js')
 	script(src='/js/form-validators/accountValidator.js')

@@ -1,0 +1,30 @@
+#layercontroller.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+	.modal-dialog.modal-layercontroller
+		.modal-content
+			.modal-body
+				.container
+					select#mapindex.form-control(name='subject', required='required')
+						//option(value='na', selected='') Choose One:
+						option(value='矢量', selected='') 1:100万
+						option(value='DEM') 1:200万
+						option(value='影像') 1:400万
+						option(value='扫描图') 1:800万
+						option(value='其他资料') 1:1400万
+					div
+						div.col-lg-6
+							div.input-group
+								span.input-group-addon
+									input(type="checkbox")
+								input.form-control(type="text", value="底图", readonly="readonly")
+					div
+						div.col-lg-6
+							div.input-group
+								span.input-group-addon
+									input(type="checkbox")
+								input.form-control(type="text", value="图号", readonly="readonly")
+					div
+						div.col-lg-6
+							div.input-group
+								span.input-group-addon
+									input(type="checkbox")
+								input.form-control(type="text", value="网格", readonly="readonly")

@@ -11,7 +11,7 @@ $(document).ready(function(){
     $('#mapcanvas').css({'height': (window.innerHeight - 5)*0.9 + 44});
     $('#mapcanvas').css({'width': (window.innerWidth - 310)});
     //ToDo
-    $('#mapcanvas').css({'margin-top': -(window.innerHeight - 5)*0.9 - 44});//-945
+    $('#mapcanvas').css({'margin-top': -(window.innerHeight - 5)*0.9 - 44});
     //margin-top -954px
 	$('#account-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
