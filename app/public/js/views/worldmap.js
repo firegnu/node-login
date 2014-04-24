@@ -51,17 +51,19 @@
         var martrix = new paper.Matrix();
         martrix = martrix.translate(deltX, deltY, 0.0).scale(scale, [centerX, centerY]);
         paper.project.layers[getLayerByName('worldmap')].transform(martrix, true);
+        paper.project.layers[getLayerByName('mapIndex')].transform(martrix, true);
     };
 
     var rubberBand = function(downX, downY, currentX, currentY, rubber) {
         var pathRubberBand = new paper.Path.Rectangle([downX, downY], [currentX - downX, currentY - downY]);
         pathRubberBand.strokeColor = 'red';
-        pathRubberBand.fillColor = '#565689';
-        pathRubberBand.strokeWidth = 2;
-        pathRubberBand.opacity = 0.3;
+        pathRubberBand.fillColor = 'cyan';
+        pathRubberBand.strokeWidth = 1;
+        pathRubberBand.opacity = 0.7;
         pathRubberBand.removeOnDrag();
         pathRubberBand.removeOnUp();
         rubber.addChild(pathRubberBand);
+        //rubber.bringToFront();
     };
 
     var init = function() {
@@ -92,6 +94,9 @@
                     Math.abs(event.point.y - event.downPoint.y), paper.view.viewSize.width, paper.view.viewSize.height);
                 refreshPainter(0, 0, panZoomScale,
                         Math.abs(event.point.x + event.downPoint.x)/2, Math.abs(event.point.y + event.downPoint.y)/2);
+            }
+            else if(event.event.button === 2) {
+                //$.contextMenu;
             }
         };
 
@@ -159,7 +164,7 @@
         //countryGroup.addChild(countriesName);
         var mapLayer = new paper.Layer([countryGroup]);
         mapLayer.name = 'worldmap';
-        paper.view.draw();
+
     };
 
     worldMapView.draw = function(dataView) {

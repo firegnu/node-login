@@ -1,6 +1,7 @@
 
 $(document).ready(function(){
     $('body').css('background',"rgb(0,0,0)");
+
 	var hc = new HomeController();
 	var av = new AccountValidator();
 
@@ -9,7 +10,8 @@ $(document).ready(function(){
     //
     $('#mapcanvas').css({'height': (window.innerHeight - 5)*0.9 + 44});
     $('#mapcanvas').css({'width': (window.innerWidth - 310)});
-    $('#mapcanvas').css({'margin-top': '-954px'});
+    //ToDo
+    $('#mapcanvas').css({'margin-top': -(window.innerHeight - 5)*0.9 - 44});//-945
     //margin-top -954px
 	$('#account-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
@@ -90,6 +92,8 @@ $(document).ready(function(){
                 success: function(data) {
                     //paint worldmap
                     worldMapView.draw(data);
+                    mapindex.DrawAllMaps();
+                    paper.view.draw();
                     $('.progress-bar').width(400);
                     $('.progress-bar').text(100 + "%");
                     clearInterval(progress);
