@@ -222,6 +222,10 @@ module.exports = function(app) {
 			res.redirect('/print');	
 		});
 	});
+
+    app.get('/download', function(req, res) {
+        //start download
+    });
 	
 	app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });
 

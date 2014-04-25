@@ -109,6 +109,16 @@
 
     $('.treeviewdownloadbtn').click(function() {
         alert($('.modal-dialog-treeview-download').find('td:last').text());
+        $.ajax({
+            type: 'GET',
+            url: '/Download',
+            success: function(data) {
+
+            },
+            fail: function(data) {
+
+            }
+        });
     });
 
     $('.modal-treeview-download').on('shown.bs.modal', function() {
