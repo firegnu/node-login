@@ -92,7 +92,19 @@
             else {
                 paper.project.layers[worldMapView.getLayerByName('mapIndex')].children[0].visible = false;
             }
+            //remainOringinDisplay('worldmap');
+            remainOringinDisplay('mapIndexNum');
+            remainOringinDisplay('mapIndex');
+            paper.view.draw();
         }
+
     });
+
+    var remainOringinDisplay = function(layerName) {
+        var matrix = new paper.Matrix();
+        matrix = matrix.translate(worldMapView.layerMatrix.translateX, worldMapView.layerMatrix.translateY, 0.0).scale(worldMapView.layerMatrix.scaleX,
+            worldMapView.layerMatrix.scaleY ,[paper.view.viewSize.width/2, paper.view.viewSize.height/2]);
+        paper.project.layers[worldMapView.getLayerByName(layerName)].transform(matrix, true);
+    };
 
 })(window.layercontroller = window.layercontroller || {});

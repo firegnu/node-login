@@ -8,7 +8,9 @@
     var minY = Infinity;
     var maxY = -Infinity;
 
-    //worldMapView.layerMatrix = new paper.Matrix();
+    worldMapView.data = {};
+
+    worldMapView.layerMatrix = new paper.Matrix();
 
     var getMinMaxXY = function(x, y) {
         if(x * 3600 > maxX) {
@@ -56,10 +58,10 @@
         paper.project.layers[worldMapView.getLayerByName('mapIndex')].transform(martrix, true);
         paper.project.layers[worldMapView.getLayerByName('mapIndexNum')].transform(martrix, true);
 
-        /*worldMapView.layerMatrix.scaleX *= martrix.scaleX;
+        worldMapView.layerMatrix.scaleX *= martrix.scaleX;
         worldMapView.layerMatrix.scaleY *= martrix.scaleY;
         worldMapView.layerMatrix.translateX += deltX;
-        worldMapView.layerMatrix.translateY += deltY;*/
+        worldMapView.layerMatrix.translateY += deltY;
     };
 
     var rubberBand = function(downX, downY, currentX, currentY, rubber) {

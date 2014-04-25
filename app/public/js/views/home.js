@@ -92,6 +92,7 @@ $(document).ready(function(){
                 success: function(data) {
                     //paint worldmap
                     worldMapView.draw(data);
+                    worldMapView.data = data;
                     mapindex.DrawAllMaps("1:100万");
                     paper.view.draw();
                     $('.progress-bar').width(400);
