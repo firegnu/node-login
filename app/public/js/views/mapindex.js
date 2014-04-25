@@ -3,13 +3,8 @@
  */
 
 (function(mapindex) {
-    //mapindex.mapIndexPaper = {};
+    mapindex.currentMapIndexNum = '';
 
-    /*window.onload = function() {
-        var canvas = document.getElementById("mycanvas");
-        paper.setup(canvas);
-        DrawAllMaps();
-    };*/
     CoorTransform = function()
     {
         this.mscale = 1.0;
@@ -17,18 +12,18 @@
         this.mystart = 0.0;
         this.mhscreen = 0;
         this.mwscreen = 0;
-    }
+    };
 
     MapCoor = function()
     {
         this.mapx;
         this.mapy;
-    }
+    };
     ScreenCoor = function()
     {
         this.screenx;
         this.screeny;
-    }
+    };
 
     CoorTransform.prototype.MapToScreen = function(mapcoor)
     {
@@ -36,7 +31,7 @@
         screencoor.screenx = Math.floor((mapcoor.mapx - this.mxstart)/this.mscale);
         screencoor.screeny = Math.floor(this.mhscreen - (mapcoor.mapy - this.mystart)/this.mscale);
         return screencoor;
-    }
+    };
 
     CoorTransform.prototype.ScreenToMap = function(screencoor)
     {
@@ -44,13 +39,13 @@
         mapcoor.mapx = this.mxstart + screencoor * this.mscale;
         mapcoor.mapy = this.mystart + this.mscale * (this.mhscreen - screencoor.screeny);
         return mapcoor;
-    }
+    };
 
     RowCollum = function()
     {
         this.row = 0;
         this.collum = 0;
-    }
+    };
 
     OneMap = function()
     {
@@ -59,13 +54,13 @@
         this.rowcol = new RowCollum();
         this.nsflag = null;
         this.mapindex = null;
-    }
+    };
 
     XYdetal = function()
     {
         this.xdetal = 0;
         this.ydetal = 0;
-    }
+    };
 
     function GetDetalByMapCoor(mapcoor,maptype)
     {
@@ -128,7 +123,7 @@
             }
         }
         return mydetal;
-    }
+    };
 
     function GetDetalByRowCol(rowcol,maptype,nsflag)
     {
@@ -176,7 +171,7 @@
             }
         }
         return mydetal;
-    }
+    };
 
     function GetNSflag(mapcoor)
     {
@@ -184,7 +179,7 @@
         if(mapcoor.mapy < 0)
             nsflag = 'S';
         return nsflag;
-    }
+    };
 
     function GetRowCode(n)
     {
@@ -259,7 +254,7 @@
                 break;
         }
         return rowcode;
-    }
+    };
 
     function CalculateByDetal(xdetal,ydetal,latitude,longitude)
     {
@@ -267,7 +262,7 @@
         rowcol.row = Math.floor(latitude/ydetal) + 1;
         rowcol.collum = Math.floor(longitude/xdetal) + 1;
         return rowcol;
-    }
+    };
 
     function CaculateBoundByRowCol(rowcol,maptype,nsflag)
     {
@@ -290,7 +285,7 @@
         onemap.mapindex = maptype + nsflag +indexrow + indexcol;
         onemap.nsflag = nsflag;
         return onemap;
-    }
+    };
 
     function CalculateOneMapindex(mapcoor,maptype)
     {
@@ -315,7 +310,7 @@
         onemap = CaculateBoundByRowCol(hundredrowcol,maptype,nsflag);
 
         return onemap;
-    }
+    };
 
     function GetSRBMap(lbrowcol,rtrowcol,maptype,nsflag)
     {
@@ -512,7 +507,7 @@
         srbmap.rowcol.collum = sbcol;
         srbmap = CaculateBoundByRowCol(srbmap.rowcol,maptype,nsflag);
         return srbmap;
-    }
+    };
 
     function GetMapsBetween(lbrowcol,rtrowcol,nsflag,maptype)
     {
@@ -607,7 +602,7 @@
             }
         }
         return maparray;
-    }
+    };
 
     function GetOneRow(rowcol,maptype)
     {
@@ -643,7 +638,7 @@
         currowcol.row = 1;
         currowcol.collum = maxcol;
         return currowcol;
-    }
+    };
 
     function GetMapsBetweenTwoIntervel(lbrowcol,lbnsflag,rtrowcol,rtnsflag,maptype)
     {
@@ -669,9 +664,9 @@
             }
         }
         return maparray;
-    }
+    };
 
-    mapindex.DrawAllMaps = function()
+    mapindex.DrawAllMaps = function(scaleNum)
     {
         var transform = new CoorTransform();
         var viewsize =  paper.project.view.size;

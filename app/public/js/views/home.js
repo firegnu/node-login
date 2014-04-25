@@ -10,8 +10,8 @@ $(document).ready(function(){
     //
     $('#mapcanvas').css({'height': (window.innerHeight - 5)*0.9 + 44});
     $('#mapcanvas').css({'width': (window.innerWidth - 310)});
-    //ToDo
-    $('#mapcanvas').css({'margin-top': -(window.innerHeight - 5)*0.9 - 44});
+    //
+    $('#mapcanvas').css({'margin-top': -(window.innerHeight - 5 + $('.navbar').height())*0.9});
     //margin-top -954px
 	$('#account-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
@@ -92,7 +92,7 @@ $(document).ready(function(){
                 success: function(data) {
                     //paint worldmap
                     worldMapView.draw(data);
-                    mapindex.DrawAllMaps();
+                    mapindex.DrawAllMaps("1:100万");
                     paper.view.draw();
                     $('.progress-bar').width(400);
                     $('.progress-bar').text(100 + "%");

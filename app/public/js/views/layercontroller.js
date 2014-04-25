@@ -31,6 +31,12 @@
         else {
             $('#mapindexnumlayer').prop('checked', false);
         }
+        if(mapindex.currentMapIndexNum == '') {
+            $('#mapindex').val('1:100万');
+        }
+        else {
+            $('#mapindex').val(mapindex.currentMapIndexNum);
+        }
     });
 
     $("#worldmaplayer").change(function() {
@@ -57,6 +63,35 @@
         }
         else {
             paper.project.layers[worldMapView.getLayerByName('mapIndexNum')].children[0].visible = false;
+        }
+    });
+
+    $('#mapindex').change(function() {
+        mapindex.currentMapIndexNum = $(this).val();
+        if(paper.project.layers[worldMapView.getLayerByName('mapIndex')] !== undefined ||
+            paper.project.layers[worldMapView.getLayerByName('mapIndexNum')] !== undefined) {
+            paper.project.layers[worldMapView.getLayerByName('mapIndex')].remove();
+            paper.project.layers[worldMapView.getLayerByName('mapIndexNum')].remove();
+            //todo: set current matrix to mapindex layer
+            mapindex.DrawAllMaps($(this).val());
+            if(($("#mapindexnumlayer").is(":checked"))) {
+                paper.project.layers[worldMapView.getLayerByName('mapIndexNum')].children[0].visible = true;
+            }
+            else {
+                paper.project.layers[worldMapView.getLayerByName('mapIndexNum')].children[0].visible = false;
+            }
+            if(($("#worldmaplayer").is(":checked"))) {
+                paper.project.layers[worldMapView.getLayerByName('worldmap')].children[0].visible = true;
+            }
+            else {
+                paper.project.layers[worldMapView.getLayerByName('worldmap')].children[0].visible = false;
+            }
+            if(($("#mapindexlayer").is(":checked"))) {
+                paper.project.layers[worldMapView.getLayerByName('mapIndex')].children[0].visible = true;
+            }
+            else {
+                paper.project.layers[worldMapView.getLayerByName('mapIndex')].children[0].visible = false;
+            }
         }
     });
 
