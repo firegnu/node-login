@@ -7444,7 +7444,7 @@ var PointText = this.PointText = TextItem.extend({
                     ctx.fillText(line, 0, 0);
                 }
                 else if(this.data.type === 'cqtext') {
-                    //ctx.scale(12./this.bounds.height, 12./this.bounds.height);
+                    ctx.scale(3./this.bounds.height, 3./this.bounds.height);
                     ctx.fillText(line, 0, 0);
                 }
                 else {

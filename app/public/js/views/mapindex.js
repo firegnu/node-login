@@ -733,7 +733,10 @@
             text.characterStyle = {
                 fontFamily: 'microsoft yahei',
                 fontSize: 3,
-                fillColor: 'red'
+                fillColor: 'black'
+            };
+            text.data = {
+                type: 'cqtext'
             };
             mapIndexTextGroup.addChild(text);
         }

@@ -10,6 +10,7 @@
         $('.modal-layercontroller').css({'position': 'absolute'});
         $('.modal-layercontroller').css({'top': '30px'});
         $('.modal-layercontroller').css({'right': '30px'});
+        $('.modal-backdrop').css({'display': 'none'});
     });
 
     $('#layercontroller').on('shown.bs.modal', function(){
