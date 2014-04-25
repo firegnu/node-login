@@ -23,7 +23,7 @@
         }
     };
 
-    var getLayerByName = function(layerName) {
+    worldMapView.getLayerByName = function(layerName) {
         for(var i = 0; i < paper.project.layers.length; i++) {
             var layer = paper.project.layers[i];
             if(layer.name === layerName) {
@@ -50,8 +50,9 @@
     var refreshPainter = function(deltX, deltY, scale, centerX, centerY) {
         var martrix = new paper.Matrix();
         martrix = martrix.translate(deltX, deltY, 0.0).scale(scale, [centerX, centerY]);
-        paper.project.layers[getLayerByName('worldmap')].transform(martrix, true);
-        paper.project.layers[getLayerByName('mapIndex')].transform(martrix, true);
+        paper.project.layers[worldMapView.getLayerByName('worldmap')].transform(martrix, true);
+        paper.project.layers[worldMapView.getLayerByName('mapIndex')].transform(martrix, true);
+        paper.project.layers[worldMapView.getLayerByName('mapIndexNum')].transform(martrix, true);
     };
 
     var rubberBand = function(downX, downY, currentX, currentY, rubber) {

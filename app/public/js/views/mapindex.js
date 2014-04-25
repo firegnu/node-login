@@ -742,10 +742,12 @@
             };
             mapIndexTextGroup.addChild(text);
         }
-        var mapIndexLayer = new paper.Layer([mapIndexGroup, mapIndexTextGroup]);
+        var mapIndexLayer = new paper.Layer([mapIndexGroup]);
+        var mapIndexNumLayer = new paper.Layer([mapIndexTextGroup]);
         //at first do not show mapnum
-        mapIndexLayer.children[1].visible = false;
+        mapIndexNumLayer.children[0].visible = false;
         mapIndexLayer.name = 'mapIndex';
+        mapIndexNumLayer.name = 'mapIndexNum';
     }
 
 })(window.mapindex = window.mapindex || {});
