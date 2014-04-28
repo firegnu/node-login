@@ -227,13 +227,8 @@ module.exports = function(app) {
 	});
 
     app.post('/Download', function(req, res) {
-        var file = 'C:\\AdobeRenderServerLog.txt';
-        //res.download(file, file);
-        var file = fs.readFileSync('C:\\AdobeRenderServerLog.txt', 'binary');
-
-        res.setHeader('Content-Length', file.length);
-        res.write(file, 'binary');
-        res.end();
+        var file = 'C:\\paperJSQt.zip';
+        res.download(file, file);
     });
 	
 	app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });
