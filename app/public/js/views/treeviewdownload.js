@@ -108,17 +108,11 @@
     };
 
     $('.treeviewdownloadbtn').click(function() {
-        alert($('.modal-dialog-treeview-download').find('td:last').text());
-        $.ajax({
-            type: 'GET',
-            url: '/Download',
-            success: function(data) {
-
-            },
-            fail: function(data) {
-
-            }
-        });
+        //alert($('.modal-dialog-treeview-download').find('td:last').text());
+        //$.ajax({type: 'POST', url: '/Download',data:{path:$('.modal-dialog-treeview-download').find('td:last').text()}});
+        var form = $('<form>', {action: '/Download', method: 'POST'});
+        form.append($('<input>', {name: 'image_path', value: $('.modal-dialog-treeview-download').find('td:last').text()}));
+        form.submit();
     });
 
     $('.modal-treeview-download').on('shown.bs.modal', function() {

@@ -5,6 +5,9 @@ var EM = require('./modules/email-dispatcher');
 
 var fs = require('fs');
 
+var path = require('path');
+//var mime = require('mime');
+
 module.exports = function(app) {
 
 // main login page //
@@ -223,8 +226,14 @@ module.exports = function(app) {
 		});
 	});
 
-    app.get('/download', function(req, res) {
-        //start download
+    app.post('/Download', function(req, res) {
+        var file = 'C:\\AdobeRenderServerLog.txt';
+        //res.download(file, file);
+        var file = fs.readFileSync('C:\\AdobeRenderServerLog.txt', 'binary');
+
+        res.setHeader('Content-Length', file.length);
+        res.write(file, 'binary');
+        res.end();
     });
 	
 	app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });
