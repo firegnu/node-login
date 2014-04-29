@@ -258,7 +258,6 @@ module.exports = function(app) {
             res.redirect('/');
         }   else {
             var downFiles = req.body.image_path.split(',');
-            var xxx = 1;
             //download multi files
             if(downFiles.length > 1) {
                 var zipDownloadFolder = new EasyZip();
