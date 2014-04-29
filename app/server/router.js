@@ -6,7 +6,8 @@ var EM = require('./modules/email-dispatcher');
 var fs = require('fs');
 
 var path = require('path');
-//var mime = require('mime');
+var Zip = require('node-zip');
+var archiver = require('archiver');
 
 module.exports = function(app) {
 
@@ -227,8 +228,42 @@ module.exports = function(app) {
 	});
 
     app.post('/Download', function(req, res) {
-        var file = 'C:\\paperJSQt.zip';
-        res.download(file, file);
+        if (req.session.user == null){
+            // if user is not logged-in redirect back to login page //
+            res.redirect('/');
+        }   else {
+            var file = 'c:\\AdobeRenderServerLog.txt';
+            var downFiles = req.body.image_path.split(',');
+            //download multi files
+            if(downFiles.length > 1) {
+                var output = fs.createWriteStream('c:\\' + 'download.zip');
+                var archive = archiver('zip');
+
+                output.on('close', function() {
+                    console.log(archive.pointer() + ' total bytes');
+                    console.log('archiver has been finalized and the output file descriptor has closed.');
+                    res.download('c:\\' + 'download.zip');
+                });
+
+                archive.on('error', function(err) {
+                    throw err;
+                });
+
+                archive.pipe(output);
+
+                var file1 = 'c:\\' +  'SQLDB_DEM.json';
+                var file2 = 'c:\\' +  'world.json';
+
+                archive.append(fs.createReadStream(file1), { name: 'SQLDB_DEM.json' })
+                    .append(fs.createReadStream(file2), { name: 'world.json' })
+                    .finalize();
+            }
+            //download only one file
+            else {
+                var downFile = 'c:\\' +  'SQLDB_DEM.json';
+                res.download(downFile);//downFiles[0]
+            }
+        }
     });
 	
 	app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });

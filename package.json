@@ -21,7 +21,9 @@
      	"jugglingdb": "0.2.x",
      	"jugglingdb-mysql": "latest",
 		"moment" : "1.7.2",
-		"emailjs": "0.3.3"
+		"emailjs": "0.3.3",
+        "node-zip": "latest",
+        "archiver": "latest"
 	},
 	"engines": {
 		"node": "0.8.14",

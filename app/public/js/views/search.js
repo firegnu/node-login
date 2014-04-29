@@ -211,12 +211,16 @@
     });
 
     $('.searchdownloadbtn').click(function() {
+        var desFile = [];
         for(var i = 0; i < $('.searchcheckbox').length; i++) {
             if($($('.searchcheckbox')[i]).is(':checked')) {
                 //start download selected files
-                alert($($('.searchcheckbox')[i]).parent().parent().find('td:last').text());
+                desFile.push($($('.searchcheckbox')[i]).parent().parent().find('td:last').text());
             }
         }
+        var form = $('<form>', {action: '/Download', method: 'POST'});
+        form.append($('<input>', {name: 'image_path', value: desFile}));
+        form.submit();
     });
 
 })(window.search = window.search || {});
