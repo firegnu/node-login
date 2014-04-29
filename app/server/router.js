@@ -257,36 +257,53 @@ module.exports = function(app) {
             // if user is not logged-in redirect back to login page //
             res.redirect('/');
         }   else {
-            var file = 'c:\\AdobeRenderServerLog.txt';
             var downFiles = req.body.image_path.split(',');
+            var xxx = 1;
             //download multi files
             if(downFiles.length > 1) {
-                compassDownloadFolder(res);
+                var zipDownloadFolder = new EasyZip();
+                var addZipFileIndex = 0;
+                for(var i = 0; i < downFiles.length; i++) {
+                    var fileStat = fs.statSync(downFiles[i]);
+                    if(fileStat.isFile()) {
+                        var fileName = downFiles[i].split('\\');
+                        zipDownloadFolder.addFile(fileName[fileName.length - 1], downFiles[i],function() {
+                            addZipFileIndex++;
+                            zipDownloadFolder.writeToFileSycn('c:\\download.zip');
+                            if(addZipFileIndex === downFiles.length) {
+                                res.download('c:\\download.zip');
+                            }
+                        });
+                    }
+                    if(fileStat.isDirectory()) {
+                        zipDownloadFolder.zipFolder(downFiles[i], function() {
+                            addZipFileIndex++;
+                            zipDownloadFolder.writeToFileSycn('c:\\download.zip');
+                            if(addZipFileIndex === downFiles.length) {
+                                res.download('c:\\download.zip');
+                            }
+                        });
+                    }
+                }
             }
-            //download only one file
+            //download only one file/folder
             else {
-                //var ddd = fs.isDir(downFiles[0]);
-                //res.download(downFile);//downFiles[0];
-                fs.stat('c:\\json', function (err, stats) {//downFiles[0]
+                fs.stat(downFiles[0], function (err, stats) {
                     if (err) {
                         console.log(err);
                         return;
                     }
-
                     if (stats.isFile()) {
                         //download directly
-                        var downFile = 'c:\\' +  'SQLDB_DEM.json';
-                        res.download(downFile);//downFiles[0];
+                        res.download(downFiles[0]);
                     }
                     if (stats.isDirectory()) {
                         //compass first and then download
-                        //compassDownloadFolder(res);
                         var zipDownloadFolder = new EasyZip();
-                        zipDownloadFolder.zipFolder('c:\\json', function() {
+                        zipDownloadFolder.zipFolder(downFiles[0], function() {
                             zipDownloadFolder.writeToFileSycn('c:\\download.zip');
                             res.download('c:\\download.zip');
                         });
-                        //res.download('c:\\download.zip');
                     }
                 });
             }

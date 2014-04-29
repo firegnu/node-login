@@ -109,7 +109,7 @@
 
     $('.treeviewdownloadbtn').click(function() {
         var desFile = [];
-        desFile.push($('.modal-dialog-treeview-download').find('td:last').text());
+        desFile.push('c:\\json');//$('.modal-dialog-treeview-download').find('td:last').text()
         var form = $('<form>', {action: '/Download', method: 'POST'});
         form.append($('<input>', {name: 'image_path', value: desFile}));
         form.submit();
