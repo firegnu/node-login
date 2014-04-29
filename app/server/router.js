@@ -6,8 +6,8 @@ var EM = require('./modules/email-dispatcher');
 var fs = require('fs');
 
 var path = require('path');
-var Zip = require('node-zip');
 var archiver = require('archiver');
+var EasyZip = require('easy-zip').EasyZip;
 
 module.exports = function(app) {
 
@@ -227,6 +227,31 @@ module.exports = function(app) {
 		});
 	});
 
+    var compassDownloadFolder = function(res) {
+        var output = fs.createWriteStream('c:\\' + 'download.zip');
+        var archive = archiver('zip');
+
+        output.on('close', function() {
+            console.log(archive.pointer() + ' total bytes');
+            console.log('archiver has been finalized and the output file descriptor has closed.');
+            res.download('c:\\' + 'download.zip');
+        });
+
+        archive.on('error', function(err) {
+            throw err;
+        });
+
+        archive.pipe(output);
+
+        var file1 = 'c:\\' +  'SQLDB_DEM.json';
+        var file2 = 'c:\\' +  'world.json';
+
+        archive.append(fs.createReadStream(file1), { name: 'SQLDB_DEM.json' })
+               .append(fs.createReadStream(file2), { name: 'world.json' })
+               .finalize();
+        //res.download('c:\\' + 'download.zip');
+    };
+
     app.post('/Download', function(req, res) {
         if (req.session.user == null){
             // if user is not logged-in redirect back to login page //
@@ -236,32 +261,34 @@ module.exports = function(app) {
             var downFiles = req.body.image_path.split(',');
             //download multi files
             if(downFiles.length > 1) {
-                var output = fs.createWriteStream('c:\\' + 'download.zip');
-                var archive = archiver('zip');
-
-                output.on('close', function() {
-                    console.log(archive.pointer() + ' total bytes');
-                    console.log('archiver has been finalized and the output file descriptor has closed.');
-                    res.download('c:\\' + 'download.zip');
-                });
-
-                archive.on('error', function(err) {
-                    throw err;
-                });
-
-                archive.pipe(output);
-
-                var file1 = 'c:\\' +  'SQLDB_DEM.json';
-                var file2 = 'c:\\' +  'world.json';
-
-                archive.append(fs.createReadStream(file1), { name: 'SQLDB_DEM.json' })
-                    .append(fs.createReadStream(file2), { name: 'world.json' })
-                    .finalize();
+                compassDownloadFolder(res);
             }
             //download only one file
             else {
-                var downFile = 'c:\\' +  'SQLDB_DEM.json';
-                res.download(downFile);//downFiles[0]
+                //var ddd = fs.isDir(downFiles[0]);
+                //res.download(downFile);//downFiles[0];
+                fs.stat('c:\\json', function (err, stats) {//downFiles[0]
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+
+                    if (stats.isFile()) {
+                        //download directly
+                        var downFile = 'c:\\' +  'SQLDB_DEM.json';
+                        res.download(downFile);//downFiles[0];
+                    }
+                    if (stats.isDirectory()) {
+                        //compass first and then download
+                        //compassDownloadFolder(res);
+                        var zipDownloadFolder = new EasyZip();
+                        zipDownloadFolder.zipFolder('c:\\json', function() {
+                            zipDownloadFolder.writeToFileSycn('c:\\download.zip');
+                            res.download('c:\\download.zip');
+                        });
+                        //res.download('c:\\download.zip');
+                    }
+                });
             }
         }
     });
