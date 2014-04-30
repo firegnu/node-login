@@ -23,7 +23,9 @@
 		"moment" : "1.7.2",
 		"emailjs": "0.3.3",
         "archiver": "latest",
-        "easy-zip": "latest"
+        "easy-zip": "latest",
+        "i18n-2": "latest",
+        "i18next": "latest"
 	},
 	"engines": {
 		"node": "0.8.14",
