@@ -82,23 +82,20 @@ body {
   height: 20px;
 }
 #btn-controlpanel {
-  width: 100px;
   top: 12px;
-  right: 60px;
+  right: 100px;
   position: absolute;
   background: none;
   border: none;
   font-size: 20px;
 }
 #btn-logout {
-  width: 100px;
   top: 10px;
-  right: 10px;
+  right: 40px;
   position: absolute;
   background: none;
   border: none;
   font-size: 20px;
-  font-style: italic;
 }
 #print {
   padding: 20px;

@@ -6,7 +6,6 @@ var EM = require('./modules/email-dispatcher');
 var fs = require('fs');
 
 var path = require('path');
-var archiver = require('archiver');
 var EasyZip = require('easy-zip').EasyZip;
 
 module.exports = function(app) {
@@ -227,31 +226,6 @@ module.exports = function(app) {
 		});
 	});
 
-    var compassDownloadFolder = function(res) {
-        var output = fs.createWriteStream('c:\\' + 'download.zip');
-        var archive = archiver('zip');
-
-        output.on('close', function() {
-            console.log(archive.pointer() + ' total bytes');
-            console.log('archiver has been finalized and the output file descriptor has closed.');
-            res.download('c:\\' + 'download.zip');
-        });
-
-        archive.on('error', function(err) {
-            throw err;
-        });
-
-        archive.pipe(output);
-
-        var file1 = 'c:\\' +  'SQLDB_DEM.json';
-        var file2 = 'c:\\' +  'world.json';
-
-        archive.append(fs.createReadStream(file1), { name: 'SQLDB_DEM.json' })
-               .append(fs.createReadStream(file2), { name: 'world.json' })
-               .finalize();
-        //res.download('c:\\' + 'download.zip');
-    };
-
     app.post('/Download', function(req, res) {
         if (req.session.user == null){
             // if user is not logged-in redirect back to login page //
@@ -268,18 +242,18 @@ module.exports = function(app) {
                         var fileName = downFiles[i].split('\\');
                         zipDownloadFolder.addFile(fileName[fileName.length - 1], downFiles[i],function() {
                             addZipFileIndex++;
-                            zipDownloadFolder.writeToFileSycn('c:\\download.zip');
+                            zipDownloadFolder.writeToFileSycn('download.zip');
                             if(addZipFileIndex === downFiles.length) {
-                                res.download('c:\\download.zip');
+                                res.download('download.zip');
                             }
                         });
                     }
                     if(fileStat.isDirectory()) {
                         zipDownloadFolder.zipFolder(downFiles[i], function() {
                             addZipFileIndex++;
-                            zipDownloadFolder.writeToFileSycn('c:\\download.zip');
+                            zipDownloadFolder.writeToFileSycn('download.zip');
                             if(addZipFileIndex === downFiles.length) {
-                                res.download('c:\\download.zip');
+                                res.download('download.zip');
                             }
                         });
                     }
@@ -300,8 +274,8 @@ module.exports = function(app) {
                         //compass first and then download
                         var zipDownloadFolder = new EasyZip();
                         zipDownloadFolder.zipFolder(downFiles[0], function() {
-                            zipDownloadFolder.writeToFileSycn('c:\\download.zip');
-                            res.download('c:\\download.zip');
+                            zipDownloadFolder.writeToFileSycn('download.zip');
+                            res.download('download.zip');
                         });
                     }
                 });

@@ -5,14 +5,16 @@ $(document).ready(function(){
 	var hc = new HomeController();
 	var av = new AccountValidator();
 
-    $('#giscontent').css({'height': (window.innerHeight - 5)*0.9});
-    $('#giscontent').css({'width': '300px'});
-    //
-    $('#mapcanvas').css({'height': (window.innerHeight - 5)*0.9 + 44});
-    $('#mapcanvas').css({'width': (window.innerWidth - 310)});
-    //
-    $('#mapcanvas').css({'margin-top': -(window.innerHeight - 5 + $('.navbar').height())*0.9});
-    //margin-top -954px
+    var resizeWindowContent = function() {
+        $('#giscontent').css({'height': (window.innerHeight - 5)*0.9});
+        $('#giscontent').css({'width': '300px'});
+        $('#mapcanvas').css({'height': (window.innerHeight - 5)*0.9 + 44});
+        $('#mapcanvas').css({'width': (window.innerWidth - 310)});
+        $('#mapcanvas').css({'margin-top': -(window.innerHeight - 5 + $('.navbar').height())*0.9});
+    };
+
+    resizeWindowContent();
+
 	$('#account-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
 			if (av.validateForm() == false){
@@ -151,6 +153,10 @@ $(document).ready(function(){
         fail: function(data) {
             alert('DB server do not response');
         }
+    });
+
+    $(window).resize(function(e){
+
     });
 
 })
