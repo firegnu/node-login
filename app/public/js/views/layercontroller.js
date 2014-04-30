@@ -6,11 +6,12 @@
  */
 (function(layercontroller) {
     $('#btn-controlpanel').click(function() {
-        $('#layercontroller').modal({ show : true, keyboard : true, backdrop : true });
         $('.modal-layercontroller').css({'position': 'absolute'});
         $('.modal-layercontroller').css({'top': '30px'});
         $('.modal-layercontroller').css({'right': '30px'});
         $('.modal-backdrop').css({'display': 'none'});
+        $('#layercontroller').modal({ show : true, keyboard : true, backdrop : true });
+
     });
 
     $('#layercontroller').on('shown.bs.modal', function(){

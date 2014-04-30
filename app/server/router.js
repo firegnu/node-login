@@ -231,6 +231,9 @@ module.exports = function(app) {
             // if user is not logged-in redirect back to login page //
             res.redirect('/');
         }   else {
+            if (!fs.existsSync(req.session.user.name)) {
+                fs.mkdirSync(req.session.user.name);
+            }
             var downFiles = req.body.image_path.split(',');
             //download multi files
             if(downFiles.length > 1) {
@@ -242,18 +245,18 @@ module.exports = function(app) {
                         var fileName = downFiles[i].split('\\');
                         zipDownloadFolder.addFile(fileName[fileName.length - 1], downFiles[i],function() {
                             addZipFileIndex++;
-                            zipDownloadFolder.writeToFileSycn('download.zip');
+                            zipDownloadFolder.writeToFileSycn(req.session.user.name + '//' + 'download.zip');
                             if(addZipFileIndex === downFiles.length) {
-                                res.download('download.zip');
+                                res.download(req.session.user.name + '//' + 'download.zip');
                             }
                         });
                     }
                     if(fileStat.isDirectory()) {
                         zipDownloadFolder.zipFolder(downFiles[i], function() {
                             addZipFileIndex++;
-                            zipDownloadFolder.writeToFileSycn('download.zip');
+                            zipDownloadFolder.writeToFileSycn(req.session.user.name + '//' + 'download.zip');
                             if(addZipFileIndex === downFiles.length) {
-                                res.download('download.zip');
+                                res.download(req.session.user.name + '//' + 'download.zip');
                             }
                         });
                     }
@@ -274,8 +277,8 @@ module.exports = function(app) {
                         //compass first and then download
                         var zipDownloadFolder = new EasyZip();
                         zipDownloadFolder.zipFolder(downFiles[0], function() {
-                            zipDownloadFolder.writeToFileSycn('download.zip');
-                            res.download('download.zip');
+                            zipDownloadFolder.writeToFileSycn(req.session.user.name + '//' + 'download.zip');
+                            res.download(req.session.user.name + '//' + 'download.zip');
                         });
                     }
                 });
