@@ -314,6 +314,12 @@ module.exports = function(app) {
             }
         }
     });
+
+    app.get('/myhistory', function(req, res) {
+        LM.getAllRecords(req.session.user.name, function(e, lendRecords){
+            res.json(lendRecords);
+        });
+    });
 	
 	app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });
 

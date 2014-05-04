@@ -17,7 +17,13 @@ var lend = schema.define('lend', {
     lendfile: String
 });
 
-exports.addNewLendRecord = function(newData, callback)
-{
+exports.addNewLendRecord = function(newData, callback){
     lend.create(newData, callback);
+};
+
+exports.getAllRecords = function(username, callback) {
+    lend.all({where:{username:username}} ,function(e, res) {
+        if (e) callback(e)
+        else callback(null, res)
+    });
 };

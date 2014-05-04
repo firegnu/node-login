@@ -27,6 +27,9 @@ function HomeController()
     $('#search').click(function() {
         $('#searchmodal').modal({ show : true, keyboard : true, backdrop : true });
     });
+    $('#myhistory').click(function() {
+        $('#myhistorymodal').modal({ show : true, keyboard : true, backdrop : true });
+    });
 // confirm account deletion //
 	$('#account-form-btn1').click(function(){$('.modal-confirm').modal('show')});
 

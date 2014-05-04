@@ -203,6 +203,9 @@ margin-left 310px,
 .modal-dialog-search-download {
   width: 920px;
 }
+.modal-dialog-myhistory {
+  width: 920px;
+}
 #searchcontent {
   width: 100%;
 }
@@ -217,6 +220,11 @@ margin-left 310px,
   overflow-x: scroll;
   max-height: 200px;
 }
+#myhistorymodal .dt-table-wrapper {
+  height: 400px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
 .pull-left {
   display: none;
 }
@@ -226,10 +234,16 @@ margin-left 310px,
 #table-container_1 .dropdown-toggle {
   display: none;
 }
+#table-container_2 .dropdown-toggle {
+  display: none;
+}
 #serarresult .dt-toolbar-container {
   display: none;
 }
 #table-container_1 .dt-toolbar-container {
+  display: none;
+}
+#table-container_2 .dt-toolbar-container {
   display: none;
 }
 .modal-dialog-treeview-download h2 {
@@ -266,6 +280,9 @@ li#search {
   cursor: pointer;
 }
 li#myprofile {
+  cursor: pointer;
+}
+li#myhistory {
   cursor: pointer;
 }
 #contextMenu {
