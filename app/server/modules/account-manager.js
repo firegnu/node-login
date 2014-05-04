@@ -1,5 +1,5 @@
 
-var crypto 		= require('crypto')
+var crypto 		= require('crypto');
 var moment 		= require('moment');
 var Schema = require('jugglingdb').Schema;
 var schema = new Schema('mysql', {

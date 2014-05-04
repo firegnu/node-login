@@ -2,6 +2,7 @@
 var CT = require('./modules/country-list');
 var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
+var LM = require('./modules/lend-manager.js');
 
 var fs = require('fs');
 
@@ -226,6 +227,14 @@ module.exports = function(app) {
 		});
 	});
 
+    var addNewLendRecord = function(username, date, file) {
+        LM.addNewLendRecord({
+            username 	: username,
+            lenddate 	: date,
+            lendfile 	: file
+        });
+    };
+
     app.post('/Download', function(req, res) {
         if (req.session.user == null){
             // if user is not logged-in redirect back to login page //
@@ -247,7 +256,9 @@ module.exports = function(app) {
                             addZipFileIndex++;
                             zipDownloadFolder.writeToFileSycn(req.session.user.name + '//' + 'download.zip');
                             if(addZipFileIndex === downFiles.length) {
-                                res.download(req.session.user.name + '//' + 'download.zip');
+                                res.download(req.session.user.name + '//' + 'download.zip', function() {
+                                    addNewLendRecord(req.session.user.name, '', 'download.zip');
+                                });
                             }
                         });
                     }
@@ -256,7 +267,9 @@ module.exports = function(app) {
                             addZipFileIndex++;
                             zipDownloadFolder.writeToFileSycn(req.session.user.name + '//' + 'download.zip');
                             if(addZipFileIndex === downFiles.length) {
-                                res.download(req.session.user.name + '//' + 'download.zip');
+                                res.download(req.session.user.name + '//' + 'download.zip', function() {
+                                    addNewLendRecord(req.session.user.name, '', 'download.zip');
+                                });
                             }
                         });
                     }
@@ -271,14 +284,18 @@ module.exports = function(app) {
                     }
                     if (stats.isFile()) {
                         //download directly
-                        res.download(downFiles[0]);
+                        res.download(downFiles[0], function() {
+                            addNewLendRecord(req.session.user.name, '', 'download.zip');
+                        });
                     }
                     if (stats.isDirectory()) {
                         //compass first and then download
                         var zipDownloadFolder = new EasyZip();
                         zipDownloadFolder.zipFolder(downFiles[0], function() {
                             zipDownloadFolder.writeToFileSycn(req.session.user.name + '//' + 'download.zip');
-                            res.download(req.session.user.name + '//' + 'download.zip');
+                            res.download(req.session.user.name + '//' + 'download.zip', function() {
+                                addNewLendRecord(req.session.user.name, '', 'download.zip');
+                            });
                         });
                     }
                 });
