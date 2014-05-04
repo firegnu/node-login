@@ -74,7 +74,9 @@
     //
     var fillSearchData = function() {
         //search.allDataDB = [];
+        //图名
         var searchName = $('#searchname').val();
+        //数据名称
         var searchDataName = $('#searchdataname').val();
         var searchType = $('#searchdatatypeselect option:selected ').text();
         var searchBlc = $('#searchblcselect option:selected ').text();

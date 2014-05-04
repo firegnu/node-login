@@ -69,7 +69,7 @@
                         $('.modal-treeview-download').modal({ show : true, keyboard : true, backdrop : true });
 
                         treeViewDownload.jsonData.perPage = 1000;
-                        //hard code???how to redraw the datatable
+                        //todo how to redraw the datatable
                         $($('.modal-dialog-treeview-download li')[0]).click();
                     });
                 },
