@@ -14,7 +14,7 @@
 										.form-group
 											label(for='name')
 												| 图名
-											input#searchname.form-control(type='text', placeholder='Enter name', required='required')
+											input#searchname(type='text', placeholder='Enter name', required='required',value="awesome,neat")//.form-control
 										.form-group
 											label(for='subject')
 												| 数据类型
@@ -50,7 +50,8 @@
 										.form-group
 											label(for='name')
 												| 数据名称
-											input#searchdataname.form-control(type='text', placeholder='Enter name', required='required')
+											input#searchdataname(type='text', placeholder='Enter name', required='required')
+											//select#searchdataname//.form-control(name='subject', required='required', placeholder='Enter name')
 										.form-group
 											label(for='subject')
 												| 数据格式

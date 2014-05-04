@@ -87,6 +87,9 @@ $(document).ready(function(){
                     $('#giscontent').jstree(true).search(v);
                 }, 250);
             });
+            //search input
+            search.fillSearchNameInput();
+            //
             //request worldmap from server
             $.ajax({
                 type: 'GET',

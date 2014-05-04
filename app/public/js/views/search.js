@@ -8,6 +8,33 @@
     $('#searchdatepicker').datepicker({
     });
 
+    search.fillSearchNameInput = function() {
+        var searchStringName = '';
+        for(var i = 0; i < search.allDataDB.length; i++) {
+            searchStringName += search.allDataDB[i].text + ',';
+        }
+
+        var searchStringDataName = '';
+        for(var i = 0; i < search.allDataDB.length; i++) {
+            searchStringDataName += search.allDataDB[i].data.数据名称 + ',';
+        }
+        $('#searchname').val(searchStringName);
+        $('#searchdataname').val(searchStringDataName);
+        $('#searchdataname').selectize({
+            persist: false,
+            createOnBlur: true,
+            create: true,
+            maxItems: 2
+        });
+
+        $('#searchname').selectize({
+            persist: false,
+            createOnBlur: true,
+            create: true,
+            maxItems: 2
+        });
+    };
+
     $('#searchdatatypeselect').change(function() {
         $('#searchdataformatselect').empty();
         if(this.value === '矢量') {
@@ -73,7 +100,6 @@
 
     //
     var fillSearchData = function() {
-        //search.allDataDB = [];
         //图名
         var searchName = $('#searchname').val();
         //数据名称
@@ -82,23 +108,50 @@
         var searchBlc = $('#searchblcselect option:selected ').text();
         var searchFormat = $('#searchdataformatselect option:selected ').text();
         var searchProduceDate = $('#searchdatepicker').val();
+
+        var comboboxResults = [];
         for(var i = 0; i < search.allDataDB.length; i++) {
             var leafData = search.allDataDB[i].data;
+            leafData.id = i;
             if(leafData.数据类型 === searchType && leafData.比例尺 === searchBlc && leafData.数据格式 === searchFormat) {
-                var searResultData = {};
-                searResultData.column_00 = '';
-                searResultData.column_0 = leafData.数据类型;
-                searResultData.column_1 = leafData.数据名称;
-                searResultData.column_2 = leafData.比例尺;
-                searResultData.column_3 = leafData.图名;
-                searResultData.column_4 = leafData.数据格式;
-                searResultData.column_5 = leafData.数据来源;
-                searResultData.column_6 = leafData.生产日期;
-                searResultData.column_7 = leafData.入库时间;
-                searResultData.column_8 = leafData.数据描述;
-                searResultData.column_9 = leafData.数据路径;
-                search.jsonData.data.push(searResultData);
+                comboboxResults.push(leafData);
             }
+        }
+        var fuzzyOptionsMapName = {
+            keys: ['图名'],
+            id: 'id'
+        };
+        var fuzzyOptionsDataName = {
+            keys: ['数据名称'],
+            id: 'id'
+        };
+        var patternMapName = new Fuse(comboboxResults, fuzzyOptionsMapName);
+        var patternDataName = new Fuse(comboboxResults, fuzzyOptionsDataName);
+        var mapNames = patternMapName.search(searchName);
+        var dataNames = patternDataName.search(searchDataName);
+
+        var searchResult = [];
+        for(var i = 0; i < mapNames.length; i++) {
+            if(dataNames.indexOf(mapNames[i]) >= 0) {
+                searchResult.push(mapNames[i]);
+            }
+        }
+
+        for(var i = 0; i < searchResult.length; i++) {
+            var leafData = search.allDataDB[searchResult[i]].data;
+            var searResultData = {};
+            searResultData.column_00 = '';
+            searResultData.column_0 = leafData.数据类型;
+            searResultData.column_1 = leafData.数据名称;
+            searResultData.column_2 = leafData.比例尺;
+            searResultData.column_3 = leafData.图名;
+            searResultData.column_4 = leafData.数据格式;
+            searResultData.column_5 = leafData.数据来源;
+            searResultData.column_6 = leafData.生产日期;
+            searResultData.column_7 = leafData.入库时间;
+            searResultData.column_8 = leafData.数据描述;
+            searResultData.column_9 = leafData.数据路径;
+            search.jsonData.data.push(searResultData);
         }
     };
 
