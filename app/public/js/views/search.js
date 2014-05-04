@@ -20,19 +20,21 @@
         }
         $('#searchname').val(searchStringName);
         $('#searchdataname').val(searchStringDataName);
-        $('#searchdataname').selectize({
+        var $nameControl = $('#searchdataname').selectize({
             persist: false,
             createOnBlur: true,
             create: true,
             maxItems: 2
         });
 
-        $('#searchname').selectize({
+        var $dataNameControl = $('#searchname').selectize({
             persist: false,
             createOnBlur: true,
             create: true,
             maxItems: 2
         });
+        $nameControl[0].selectize.clear();
+        $dataNameControl[0].selectize.clear();
     };
 
     $('#searchdatatypeselect').change(function() {

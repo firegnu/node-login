@@ -38,7 +38,6 @@ $(document).ready(function(){
 	});
 
 	$('#name-tf').focus();
-	//$('#github-banner').css('top', '41px');
     //modalmyprofile
     $('#modalmyprofile').modal({ show : false, keyboard : true, backdrop : true });
 
@@ -89,7 +88,6 @@ $(document).ready(function(){
             });
             //search input
             search.fillSearchNameInput();
-            //
             //request worldmap from server
             $.ajax({
                 type: 'GET',
