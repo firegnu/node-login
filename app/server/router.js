@@ -227,10 +227,18 @@ module.exports = function(app) {
 		});
 	});
 
-    var addNewLendRecord = function(username, date, file) {
+    var addNewLendRecord = function(username, file) {
+        var currentDate = new Date();
+        var day = currentDate.getDate();
+        var month = currentDate.getMonth() + 1;
+        var year = currentDate.getFullYear();
+        var timeHour = currentDate.getHours();
+        var timeMinutes = currentDate.getMinutes();
+        var timeSeconds = currentDate.getSeconds();
+        var lendDate = day + '/' + month + '/' + year + ' ' + timeHour + ':' + timeMinutes + ':' + timeSeconds;
         LM.addNewLendRecord({
             username 	: username,
-            lenddate 	: date,
+            lenddate 	: lendDate,
             lendfile 	: file
         });
     };
@@ -257,7 +265,9 @@ module.exports = function(app) {
                             zipDownloadFolder.writeToFileSycn(req.session.user.name + '//' + 'download.zip');
                             if(addZipFileIndex === downFiles.length) {
                                 res.download(req.session.user.name + '//' + 'download.zip', function() {
-                                    addNewLendRecord(req.session.user.name, '', 'download.zip');
+                                    for(var j = 0; j < downFiles.length; j++) {
+                                        addNewLendRecord(req.session.user.name, downFiles[j]);
+                                    }
                                 });
                             }
                         });
@@ -268,7 +278,9 @@ module.exports = function(app) {
                             zipDownloadFolder.writeToFileSycn(req.session.user.name + '//' + 'download.zip');
                             if(addZipFileIndex === downFiles.length) {
                                 res.download(req.session.user.name + '//' + 'download.zip', function() {
-                                    addNewLendRecord(req.session.user.name, '', 'download.zip');
+                                    for(var j = 0; j < downFiles.length; j++) {
+                                        addNewLendRecord(req.session.user.name, downFiles[j]);
+                                    }
                                 });
                             }
                         });
@@ -285,7 +297,7 @@ module.exports = function(app) {
                     if (stats.isFile()) {
                         //download directly
                         res.download(downFiles[0], function() {
-                            addNewLendRecord(req.session.user.name, '', 'download.zip');
+                            addNewLendRecord(req.session.user.name, downFiles[0]);
                         });
                     }
                     if (stats.isDirectory()) {
@@ -294,7 +306,7 @@ module.exports = function(app) {
                         zipDownloadFolder.zipFolder(downFiles[0], function() {
                             zipDownloadFolder.writeToFileSycn(req.session.user.name + '//' + 'download.zip');
                             res.download(req.session.user.name + '//' + 'download.zip', function() {
-                                addNewLendRecord(req.session.user.name, '', 'download.zip');
+                                addNewLendRecord(req.session.user.name, downFiles[0]);
                             });
                         });
                     }

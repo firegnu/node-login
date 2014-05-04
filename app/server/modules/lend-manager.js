@@ -13,7 +13,7 @@ var schema = new Schema('mysql', {
 var lend = schema.define('lend', {
     id: Number,
     username: String,
-    lenddate: Date,
+    lenddate: String,
     lendfile: String
 });
 
