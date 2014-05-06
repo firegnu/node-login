@@ -3,10 +3,10 @@
  */
 (function(worldMapView) {
 
-    var minX = -180 * 3600;//Infinity;
-    var maxX = 180 * 3600;//-Infinity;
+    var minX = -180 * 1;//Infinity;
+    var maxX = 180 * 1;//-Infinity;
     var minY = 0;//Infinity;
-    var maxY = 90 * 3600;//-Infinity;
+    var maxY = 90 * 1;//-Infinity;
 
     worldMapView.functionIndex = 'null';
 
@@ -15,17 +15,17 @@
     worldMapView.layerMatrix = new paper.Matrix();
 
     var getMinMaxXY = function(x, y) {
-        if(x * 3600 > maxX) {
-            maxX = x * 3600;
+        if(x > maxX) {
+            maxX = x;
         }
-        if(x * 3600 < minX) {
-            minX = x * 3600;
+        if(x < minX) {
+            minX = x;
         }
-        if(y * 3600 > maxY) {
-            maxY = y * 3600;
+        if(y > maxY) {
+            maxY = y;
         }
-        if(y * 3600 < minY) {
-            minY = y * 3600;
+        if(y < minY) {
+            minY = y;
         }
     };
 
@@ -147,8 +147,8 @@
                 path.fillColor = contriesColors[parseInt(5*Math.random())];
                 path.name = countryArray[i].name;
                 for(var k = 0; k < countryArray[i].geoPolygon[j].length; k++) {
-                    var point = new paper.Point((countryArray[i].geoPolygon[j][k].x - minX) * scale,
-                            paper.view.viewSize.height - (countryArray[i].geoPolygon[j][k].y - minY) * scale);
+                    var point = new paper.Point((countryArray[i].geoPolygon[j][k].x - minX) / scale,
+                            paper.view.viewSize.height - (countryArray[i].geoPolygon[j][k].y - minY) / scale);
                     path.add(point);
                 }
                 path.closePath();
@@ -201,7 +201,7 @@
                 for(var j = 0; j < mapData.features[i].geometry.coordinates[0].length; j++) {
                     var x = mapData.features[i].geometry.coordinates[0][j][0];
                     var y = mapData.features[i].geometry.coordinates[0][j][1];
-                    countryPoints.push({'x':x * 3600, 'y':y * 3600});
+                    countryPoints.push({'x':x, 'y':y});
                     getMinMaxXY(x, y);
                 }
                 country.geoPolygon.push(countryPoints);
@@ -216,7 +216,7 @@
                         for(var l = 0; l < mapData.features[i].geometry.coordinates[j][0].length; l++) {
                             var x = mapData.features[i].geometry.coordinates[j][0][l][0];
                             var y = mapData.features[i].geometry.coordinates[j][0][l][1];
-                            countryPoints.push({'x':x * 3600, 'y':y * 3600});
+                            countryPoints.push({'x':x, 'y':y});
                             getMinMaxXY(x, y);
                         }
                     }
@@ -228,8 +228,8 @@
 
         //get xScale&yScale
         var scale = 0.0;
-        var scaleX = paper.view.viewSize.width/(maxX - minX);
-        var scaleY = paper.view.viewSize.height/(maxY - minY);
+        var scaleX = (maxX - minX)/paper.view.viewSize.width;
+        var scaleY = (maxY - minY)/paper.view.viewSize.height;
         if(scaleX <= scaleX) {
             scale = scaleX;
         }
