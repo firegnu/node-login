@@ -71,8 +71,23 @@
 $("#mapcanvas").contextMenu({
     menuSelector: "#contextMenu",
     menuSelected: function (invokedOn, selectedMenu) {
-        var msg = "You selected the menu item '" + selectedMenu.text() +
-            "' on the value '" + invokedOn.text() + "'";
-        alert(msg);
+        if(selectedMenu.text() === '点击单选') {
+            worldMapView.functionIndex = 'oneclickdownload';
+        }
+        else if(selectedMenu.text() === '点击多选') {
+            worldMapView.functionIndex = 'oneclickmultidownload';
+        }
+        else if(selectedMenu.text() === '拉框选取') {
+            worldMapView.functionIndex = 'oneclickrubberdownload';
+        }
+        else if(selectedMenu.text() === '多边形选取') {
+            worldMapView.functionIndex = 'oneclickpolygondownload';
+        }
+        else if(selectedMenu.text() === '上传文件选取') {
+            worldMapView.functionIndex = 'oneclickfiledownload';
+        }
+        else if(selectedMenu.text() === '重置工具') {
+            worldMapView.functionIndex = 'null';
+        }
     }
 });

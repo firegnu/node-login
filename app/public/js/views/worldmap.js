@@ -3,10 +3,12 @@
  */
 (function(worldMapView) {
 
-    var minX = Infinity;
-    var maxX = -Infinity;
-    var minY = Infinity;
-    var maxY = -Infinity;
+    var minX = -180 * 3600;//Infinity;
+    var maxX = 180 * 3600;//-Infinity;
+    var minY = 0;//Infinity;
+    var maxY = 90 * 3600;//-Infinity;
+
+    worldMapView.functionIndex = 'null';
 
     worldMapView.data = {};
 
@@ -88,7 +90,7 @@
 
         };
         toolForCanvas.onMouseDrag = function(event) {
-            if(event.event.button === 0) {
+            if(event.event.button === 0 && worldMapView.functionIndex === 'null') {
                 refreshPainter(event.point.x - event.lastPoint.x, event.point.y - event.lastPoint.y, 1.0,
                         paper.view.viewSize.width/2, paper.view.viewSize.height/2);
             }
@@ -98,7 +100,15 @@
         };
 
         toolForCanvas.onMouseUp = function(event) {
-            if(event.event.button === 1) {
+            if(event.event.button === 0) {
+                if (worldMapView.functionIndex === 'oneclickdownload') {
+                    var currentCoor = {};
+                    currentCoor.screenx = event.point.x;
+                    currentCoor.screeny = event.point.y;
+                    var mapCoor = mapIndexTransform.ScreenToMap(currentCoor);
+                }
+            }
+            else if(event.event.button === 1) {
                 rubberBandLayer.removeChildren();
                 var panZoomScale = getScale(Math.abs(event.point.x - event.downPoint.x),
                     Math.abs(event.point.y - event.downPoint.y), paper.view.viewSize.width, paper.view.viewSize.height);
