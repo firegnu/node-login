@@ -94,10 +94,11 @@ $(document).ready(function(){
                 url: '/worldmap',
                 success: function(data) {
                     //paint worldmap
-                    worldMapView.draw(data);
+                    /*worldMapView.draw(data);
                     worldMapView.data = data;
                     DrawAllMaps("1:100万");
-                    paper.view.draw();
+                    paper.view.draw();*/
+                    mapIndex.mapInit();
                     $('.progress-bar').width(400);
                     $('.progress-bar').text(100 + "%");
                     clearInterval(progress);

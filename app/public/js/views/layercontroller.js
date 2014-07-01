@@ -33,11 +33,11 @@
         else {
             $('#mapindexnumlayer').prop('checked', false);
         }
-        if(mapindex.currentMapIndexNum == '') {
-            $('#mapindex').val('1:100万');
+        if(mapIndex.currentMapIndexNum == '') {
+            $('#mapindex').val('100');
         }
         else {
-            $('#mapindex').val(mapindex.currentMapIndexNum);
+            $('#mapindex').val(mapIndex.currentMapIndexNum);
         }
     });
 
@@ -69,24 +69,50 @@
     });
 
     $('#mapindex').change(function() {
-        mapindex.currentMapIndexNum = $(this).val();
-        if(paper.project.layers[worldMapView.getLayerByName('mapIndex')] !== undefined ||
-            paper.project.layers[worldMapView.getLayerByName('mapIndexNum')] !== undefined) {
-            paper.project.layers[worldMapView.getLayerByName('mapIndex')].remove();
-            paper.project.layers[worldMapView.getLayerByName('mapIndexNum')].remove();
+        mapIndex.currentMapIndexNum = $(this).val();
+        if(paper.project.layers[mapIndex.getLayerByName('mapIndex')] !== undefined ||
+            paper.project.layers[mapIndex.getLayerByName('mapIndexNum')] !== undefined) {
+            paper.project.layers[mapIndex.getLayerByName('worldmap')].remove();
+            paper.project.layers[mapIndex.getLayerByName('mapIndex')].remove();
+            paper.project.layers[mapIndex.getLayerByName('mapIndexNum')].remove();
             //todo: set current matrix to mapindex layer
-            mapindex.DrawAllMaps($(this).val());
+            var mapScaleNum = -1;
+            if($(this).val() === '1') {
+                mapScaleNum = 6;
+            }
+            if($(this).val() === '2.5') {
+                mapScaleNum = 5;
+            }
+            if($(this).val() === '5') {
+                mapScaleNum = 4;
+            }
+            if($(this).val() === '10') {
+                mapScaleNum = 3;
+            }
+            if($(this).val() === '25') {
+                mapScaleNum = 2;
+            }
+            if($(this).val() === '50') {
+                mapScaleNum = 1;
+            }
+            if($(this).val() === '100') {
+                mapScaleNum = 0;
+            }
+            if($(this).val() === '200') {
+                mapScaleNum = -1;
+            }
+            mapIndex.DrawAllMaps(mapScaleNum, 'K');
             if(($("#mapindexnumlayer").is(":checked"))) {
-                paper.project.layers[worldMapView.getLayerByName('mapIndexNum')].children[0].visible = true;
+                paper.project.layers[mapIndex.getLayerByName('mapIndexNum')].children[0].visible = true;
             }
             else {
-                paper.project.layers[worldMapView.getLayerByName('mapIndexNum')].children[0].visible = false;
+                paper.project.layers[mapIndex.getLayerByName('mapIndexNum')].children[0].visible = false;
             }
             if(($("#worldmaplayer").is(":checked"))) {
-                paper.project.layers[worldMapView.getLayerByName('worldmap')].children[0].visible = true;
+                paper.project.layers[mapIndex.getLayerByName('worldmap')].children[0].visible = true;
             }
             else {
-                paper.project.layers[worldMapView.getLayerByName('worldmap')].children[0].visible = false;
+                paper.project.layers[mapIndex.getLayerByName('worldmap')].children[0].visible = false;
             }
             if(($("#mapindexlayer").is(":checked"))) {
                 paper.project.layers[worldMapView.getLayerByName('mapIndex')].children[0].visible = true;
@@ -95,8 +121,8 @@
                 paper.project.layers[worldMapView.getLayerByName('mapIndex')].children[0].visible = false;
             }
             //remainOringinDisplay('worldmap');
-            remainOringinDisplay('mapIndexNum');
-            remainOringinDisplay('mapIndex');
+            //remainOringinDisplay('mapIndexNum');
+            //remainOringinDisplay('mapIndex');
             paper.view.draw();
         }
 

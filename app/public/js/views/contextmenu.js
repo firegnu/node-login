@@ -63,7 +63,6 @@
             }
             return mouseHeight;
         }
-
     };
 })(jQuery, window);
 
@@ -72,22 +71,32 @@ $("#mapcanvas").contextMenu({
     menuSelector: "#contextMenu",
     menuSelected: function (invokedOn, selectedMenu) {
         if(selectedMenu.text() === '点击单选') {
-            worldMapView.functionIndex = 'oneclickdownload';
+            mapIndex.functionIndex = 'oneclickdownload';
+            mapIndex.clearSelected();
         }
         else if(selectedMenu.text() === '点击多选') {
-            worldMapView.functionIndex = 'oneclickmultidownload';
+            mapIndex.functionIndex = 'oneclickmultidownload';
+            mapIndex.clearSelected();
         }
         else if(selectedMenu.text() === '拉框选取') {
-            worldMapView.functionIndex = 'oneclickrubberdownload';
+            mapIndex.functionIndex = 'oneclickrubberdownload';
+            mapIndex.clearSelected();
         }
         else if(selectedMenu.text() === '多边形选取') {
-            worldMapView.functionIndex = 'oneclickpolygondownload';
+            mapIndex.functionIndex = 'oneclickpolygondownload';
+            mapIndex.clearSelected();
         }
         else if(selectedMenu.text() === '上传文件选取') {
-            worldMapView.functionIndex = 'oneclickfiledownload';
+            mapIndex.functionIndex = 'oneclickfiledownload';
+            mapIndex.clearSelected();
         }
         else if(selectedMenu.text() === '重置工具') {
-            worldMapView.functionIndex = 'null';
+            mapIndex.functionIndex = 'null';
+            mapIndex.clearSelected();
+        }
+        else if(selectedMenu.text() === '下载所选') {
+            mapIndex.functionIndex = 'downloadSelected';
+            mapIndex.downloadSelected();
         }
     }
 });
