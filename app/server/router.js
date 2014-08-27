@@ -47,7 +47,7 @@ module.exports = function(app) {
 
 //return qita dbfile json
     app.get('/dbQitafile', function(req, res) {
-        fs.readFile('C:\\SQLDB_DATUM.json', 'utf-8', function(err, data) {
+        fs.readFile('C:\\jsontest\\SQLDB_DATUM.json', 'utf-8', function(err, data) {
             if(err) {
                 res.json({data: "fail"});
             }
@@ -59,11 +59,12 @@ module.exports = function(app) {
 //return dem dbfile json
     app.get('/dbfile', function(req, res) {
         var dataJson = [];
-        var demData = fs.readFileSync('C:\\SQLDB_DEM.json', 'utf-8');
-        var qitaData = fs.readFileSync('C:\\SQLDB_DATUM.json', 'utf-8');
-        var imageData = fs.readFileSync('C:\\SQLDB_IMAGE.json', 'utf-8');
-        var vectorData = fs.readFileSync('C:\\SQLDB_VECTOR.json', 'utf-8');
-        var scanningData = fs.readFileSync('C:\\SQLDB_SCANIMG.json', 'utf-8');
+        //var b = fs.existsSync(filename);
+        var demData = fs.readFileSync('C:\\jsontest\\SQLDB_DEM.json', 'utf-8');
+        var qitaData = fs.readFileSync('C:\\jsontest\\SQLDB_DATUM.json', 'utf-8');
+        var imageData = fs.readFileSync('C:\\jsontest\\SQLDB_IMAGE.json', 'utf-8');
+        var vectorData = fs.readFileSync('C:\\jsontest\\SQLDB_VECTOR.json', 'utf-8');
+        var scanningData = fs.readFileSync('C:\\jsontest\\SQLDB_SCANIMG.json', 'utf-8');
         dataJson.push(vectorData);
         dataJson.push(imageData);
         dataJson.push(demData);

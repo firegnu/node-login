@@ -1073,6 +1073,13 @@ function GetMapsBetweenTwoIntervel(lbrowcol,lbnsflag,rtrowcol,rtnsflag,maptype)
     var maparray = [];
     if(lbnsflag == rtnsflag)
     {
+        if(lbnsflag == 'S')
+        {
+            var temprow = lbrowcol.row;
+            lbrowcol.row = rtrowcol.row;
+            rtrowcol.row = temprow;
+        }
+
         maparray = GetMapsBetween(lbrowcol,rtrowcol,lbnsflag,maptype);
     }
     else
@@ -1313,43 +1320,16 @@ function CreatePolygon(points,transform)
         strokeColor: 'green',
         strokeWidth: 1
     };
+    polygon.data = {
+        type: 'polyline'
+    };
+    prePathVector.push(polygon);
     return polygon;
 }
 
 function SelectMapsByPolygon(transform,maptype,mapscale,points)
 {
     var resmaparray = [];
-    /*var points = [];
-     var point1,point2,point3,point4;
-     point1 = new MapCoor();
-     point1.mapx = 2;
-     point1.mapy = 3;
-     point2 = new MapCoor();
-     point2.mapx = 82;
-     point2.mapy = -83;
-     point3 = new MapCoor();
-     point3.mapx = 20;
-     point3.mapy = 18;
-     point4 = new MapCoor();
-     point4.mapx = 40;
-     point4.mapy = 86;
-     points.push(point1);
-     points.push(point2);
-     points.push(point3);
-     points.push(point4);*/
-
-    /*point1 = new MapCoor();
-     point1.mapx = 1;
-     point1.mapy = -82;
-     point2 = new MapCoor();
-     point2.mapx = 81;
-     point2.mapy = 3;
-     point3 = new MapCoor();
-     point3.mapx = 81;
-     point3.mapy = 87;
-     points.push(point1);
-     points.push(point2);
-     points.push(point3);*/
     var maparray = [];
     if(mapscale == -1)
         maparray = GetAll200WMaps();
@@ -1376,11 +1356,14 @@ function SelectMapsByPolygon(transform,maptype,mapscale,points)
             var mapheight = lbscreencoor.screeny - rtscreencoor.screeny;
             path = new paper.Path.Rectangle(lbscreencoor.screenx,rtscreencoor.screeny,mapwidth,mapheight);
             path.style = {
-                fillColor: 'red',
+                fillColor: 'white',
                 strokeColor: 'green',
                 strokeWidth: 1
             };
+            path.opacity = 0.6;
+            prePathVector.push(path);
             resmaparray.push(maparray[m]);
+            selectedmap.push(maparray[m].mapindex);
         }
     }
     var polygondis = CreatePolygon(points,transform);
@@ -1485,15 +1468,21 @@ function refreshPainter(deltX, deltY, scale, centerX, centerY)
 };
 
 var clearPathStyle = function(path) {
-    path.style = {
-        fillColor:'cyan',
-        strokeColor: 'black',
-        strokeWidth: 1
+    if(path.data.type === 'polyline') {
+        path.remove();
     }
-    path.opacity = 0.1;
+    else {
+        path.style = {
+            fillColor:'cyan',
+            strokeColor: 'black',
+            strokeWidth: 1
+        }
+        path.opacity = 0.1;
+    }
 }
 
 mapIndex.clearSelected = function() {
+    selectedmap.length = 0;
     //清除单击
     if(prePath != undefined) {
         clearPathStyle(prePath);
@@ -1502,10 +1491,45 @@ mapIndex.clearSelected = function() {
     for(var i = 0; i < prePathVector.length; i++) {
         clearPathStyle(prePathVector[i]);
     }
+    //清除多边形选取
+    polygondownloadPoints.length = 0;
 };
 
+
+var selectedmap = [];
 mapIndex.downloadSelected = function() {
-    SelectMapsByPolygon(gTransform,'k',0,polygondownloadPoints);
+    if(polygondownloadPoints.length > 1) {
+        if($('#mapindex').val() === '1') {
+            var resultMaps = SelectMapsByPolygon(gTransform, 'K' , 6 , polygondownloadPoints);
+        }
+        if($('#mapindex').val() === '2.5') {
+            var resultMaps = SelectMapsByPolygon(gTransform, 'K' , 5 , polygondownloadPoints);
+        }
+        if($('#mapindex').val() === '5') {
+            var resultMaps = SelectMapsByPolygon(gTransform, 'K' , 4 , polygondownloadPoints);
+        }
+        if($('#mapindex').val() === '10') {
+            var resultMaps = SelectMapsByPolygon(gTransform, 'K' , 3 , polygondownloadPoints);
+        }
+        if($('#mapindex').val() === '25') {
+            var resultMaps = SelectMapsByPolygon(gTransform, 'K' , 2 , polygondownloadPoints);
+        }
+        if($('#mapindex').val() === '50') {
+            var resultMaps = SelectMapsByPolygon(gTransform, 'K' , 1 , polygondownloadPoints);
+        }
+        if($('#mapindex').val() === '100') {
+            var resultMaps = SelectMapsByPolygon(gTransform, 'K' , 0 , polygondownloadPoints);
+        }
+        if($('#mapindex').val() === '200') {
+            var resultMaps = SelectMapsByPolygon(gTransform, 'K' , -1 , polygondownloadPoints);
+        }
+    }
+
+    var str = '';
+    for(var i = 0; i < selectedmap.length; i++) {
+        str += selectedmap[i];
+    }
+    alert(str);
 };
 
 var prePath;
@@ -1569,11 +1593,25 @@ function DrawOneMap(transform,onemap,color,mapIndexGroup,mapIndexTextGroup,textc
     mapIndexTextGroup.addChild(text);
 }
 
+var caculatePosition = function(x, y) {
+    var screencoor1 = new ScreenCoor();
+    screencoor1.screenx = x;
+    screencoor1.screeny = y;
+    var resmap1 = gTransform.ScreenToMap(screencoor1);
+    resmap1 = OriginMapCoor(resmap1);
+    resmap1.mapx -= 180;
+
+    var point1 = new MapCoor();
+    point1.mapx = resmap1.mapx;
+    point1.mapy = resmap1.mapy;
+
+    polygondownloadPoints.push(point1);
+};
+
 var gTransform;
 mapIndex.DrawAllMaps = function(mapscale,maptype)
 {
     var transform = new CoorTransform();
-    gTransform = transform;
     var viewsize =  paper.project.view.size;
     transform.mwscreen = viewsize.width;
     transform.mhscreen = viewsize.height;
@@ -1619,7 +1657,6 @@ mapIndex.DrawAllMaps = function(mapscale,maptype)
     var mapIndexGroup = new paper.Group();
     var mapIndexTextGroup = new paper.Group();
     //alert( '共'+maparray.length.toString()+'幅');
-    var selectedmap = [];
     for(var i = 0; i < maparray.length; i++)
     {
         DrawOneMap(transform,maparray[i],'black',mapIndexGroup,mapIndexTextGroup,'red',selectedmap);
@@ -1629,6 +1666,8 @@ mapIndex.DrawAllMaps = function(mapscale,maptype)
     mapIndexLayer.name = 'mapIndex';
     mapIndexNumLayer.name = 'mapIndexNum';
 
+
+    gTransform = transform;
     var mytool = new paper.Tool();
     mytool.onMouseDown = function(event)
     {
@@ -1651,7 +1690,7 @@ mapIndex.DrawAllMaps = function(mapscale,maptype)
     };
 
     mytool.onMouseDrag = function(event) {
-        if(event.event.button === 0) {
+        if(event.event.button === 0 && mapIndex.functionIndex !== 'oneclickrubberdownload') {
             refreshPainter(event.point.x - event.lastPoint.x, event.point.y - event.lastPoint.y, 1.0,
                     paper.view.viewSize.width/2, paper.view.viewSize.height/2);
             var screencoor = new ScreenCoor();
@@ -1664,8 +1703,11 @@ mapIndex.DrawAllMaps = function(mapscale,maptype)
             var lastresmap = transform.ScreenToMap(lastscreencoor);
             transform.mxstart -= resmap.mapx - lastresmap.mapx;
             transform.mystart -= resmap.mapy - lastresmap.mapy;
+            gTransform = transform;
         }
     };
+
+
 
     mytool.onMouseUp = function(event) {
         if(event.event.button === 0 && event.point.x === event.downPoint.x && event.point.y === event.downPoint.y) {
@@ -1678,11 +1720,17 @@ mapIndex.DrawAllMaps = function(mapscale,maptype)
                 resmap.mapx -= 180;
 
                 var point = new MapCoor();
-                point.mapx = resmap.mapx - 0.002;
-                point.mapy = resmap.mapy - 0.002;
+                point.mapx = resmap.mapx;
+                point.mapy = resmap.mapy;
 
                 polygondownloadPoints.push(point);
             }
+        }
+        else if(mapIndex.functionIndex === 'oneclickrubberdownload' && event.event.button === 0) {
+            caculatePosition(event.downPoint.x, event.downPoint.y);
+            caculatePosition(event.downPoint.x, event.point.y);
+            caculatePosition(event.point.x, event.point.y);
+            caculatePosition(event.point.x, event.downPoint.y);
         }
     };
 
@@ -1701,6 +1749,8 @@ mapIndex.DrawAllMaps = function(mapscale,maptype)
         transform.mxstart = resmap.mapx;
         transform.mystart = resmap.mapy;
         transform.mscale /= scale;
+
+        gTransform = transform;
 
         return false;
     });
